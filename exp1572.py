@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os
+from os import path
 import gettext
 import babel
 import json
@@ -17,7 +17,12 @@ from importlib import reload
 # import glob
 
 APP_NAME = 'exp1572'
-LOCALES_DIR = os.path.join('locales','')
+LOCALES_DIR = path.join('locales','')
+
+here = path.abspath(path.dirname(__file__))
+with open(path.join(here, 'VERSION')) as version_file:
+	__version__ = version_file.read().strip()
+
 
 # MSG_LEVEL = 'DEBUG'
 MSG_LEVEL = 'INFO'
