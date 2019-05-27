@@ -155,9 +155,9 @@ setup(
 	# the `py_modules` argument instead as follows, which will expect a file
 	# called `my_module.py` to exist:
 	#
-	#   py_modules=["my_module"],
+	py_modules=["exp1572", "dice", "utils", "settings", "menu"],
 	# TODO
-	packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
+	# packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
 
 	# Specify which Python versions you support. In contrast to the
 	# 'Programming Language' classifiers above, 'pip install' will check this
