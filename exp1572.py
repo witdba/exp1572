@@ -3,6 +3,7 @@ import os
 import gettext
 import babel
 import json
+
 import dice
 import utils
 import settings
@@ -17,7 +18,6 @@ from importlib import reload
 
 APP_NAME = 'exp1572'
 LOCALES_DIR = os.path.join('locales','')
-VERSION: 1.0
 
 # MSG_LEVEL = 'DEBUG'
 MSG_LEVEL = 'INFO'
@@ -38,6 +38,8 @@ def loadTextResources():
 
 '''
 TODO:
+[] show legend
+[] open file with map
 [] document the code
 [] upload code to the github
 [] multiplayer mode
@@ -840,7 +842,7 @@ class Expedition:
 			l1 = self.map.cubeLocations[c2]
 			debug(f'l1: {l1}')
 			l2 = self.map.cubeLocations[utils.cubeRotateRight(l1.cubeCoordinates, l0.cubeCoordinates)]
-			# Register 3 locations as a Lake Lagos de Oro
+			# Register 3 locations as Lake Lagos de Oro
 			self.map.lakeLocations = [l0, l1, l2]
 			# Mark their lands as lake
 			# 'Обнаружено Озеро Лагос де Оро! Оно занимает следующие участки:'
