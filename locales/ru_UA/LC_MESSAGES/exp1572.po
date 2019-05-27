@@ -1,0 +1,822 @@
+# Translation catalog for exp1572
+# Copyright (C) 2019 Wit Serdakovskiy
+# This file is distributed under the same license as the exp1572 package.
+# Wit Serdakovskiy <witdba@gmail.com>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-26 14:41+0300\n"
+"PO-Revision-Date: 2019-05-26 22:27+0300\n"
+"Last-Translator: wit <witdba@gmail.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: exp1572.py:128
+msgid "location.str.noterrain"
+msgstr "Ландшафт не известен"
+
+#: exp1572.py:130
+msgid "location.str.river"
+msgstr " Река"
+
+#: exp1572.py:132
+msgid "location.str.waterfall"
+msgstr " с водопадом"
+
+#: exp1572.py:137
+#, python-brace-format
+msgid "location.str.settlements: [{s}]"
+msgstr " Поселений: [{s}]"
+
+#: exp1572.py:139
+#, python-brace-format
+msgid "location.str.sights: {sights}"
+msgstr " Достопримечательности: {sights}"
+
+#: exp1572.py:144
+msgid "map.lake.name"
+msgstr "Озеро Лагос Де Оро"
+
+#: exp1572.py:145
+msgid "map.camp.name"
+msgstr "Сожжённый лагерь европейских миссионеров"
+
+#: exp1572.py:146
+msgid "map.herd.name"
+msgstr "Мигрирующие стада животных"
+
+#: exp1572.py:147
+msgid "map.eclipse.name"
+msgstr "Предсказание солнечного затмения"
+
+#: exp1572.py:148
+msgid "map.princess.name"
+msgstr "Принцесса Канти"
+
+#: exp1572.py:149
+msgid "map.diego.name"
+msgstr "Диего Мендоса"
+
+#: exp1572.py:151
+msgid "map.wonder.name"
+msgstr "Чудо природы"
+
+#: exp1572.py:162 exp1572.py:163 exp1572.py:164 exp1572.py:628 exp1572.py:760
+#: common.py:26
+msgid "lands.mountains"
+msgstr "Горы"
+
+#: exp1572.py:371
+msgid "exception.locationAlreadyMapped"
+msgstr "Участок {loc} уже нанесён на карту!"
+
+#: exp1572.py:375
+msgid "message.foundEmpire"
+msgstr "Вы оказались в самом центре империи враждебных туземцев!"
+
+#: exp1572.py:377
+msgid "message.foundEmpireInsideEmpire"
+msgstr "Империя враждебных туземцев расширила свои границы"
+
+#: exp1572.py:381
+msgid "message.empireLocations"
+msgstr "Территория империи:"
+
+#: exp1572.py:390
+msgid "exception.wrongLocationForWaterfall"
+msgstr "Водопад возможен только на реке"
+
+#: exp1572.py:393
+msgid "message.foundWaterfallCurrentLocation"
+msgstr "На Вашем устастке {l} обнаружен водопад"
+
+#: exp1572.py:399
+msgid "message.foundWaterfallNextLocation"
+msgstr "На соседнем устастке {l} обнаружен водопад"
+
+#: exp1572.py:436
+msgid "expedition.str.expeditionTypeName"
+msgstr "{type} экспедиция"
+
+#: exp1572.py:438
+msgid "expedition.str.expeditionTypeDescription"
+msgstr ": {description}"
+
+#: exp1572.py:441
+msgid "expedition.str.day"
+msgstr "День {day} {progressbar}"
+
+#: exp1572.py:445 exp1572.py:447
+msgid "expedition.str.location"
+msgstr "Текущий участок: {loc}"
+
+#: exp1572.py:450
+msgid "expedition.str.feverTrue"
+msgstr "Лихорадка      : [X]"
+
+#: exp1572.py:452
+msgid "expedition.str.feverFalse"
+msgstr "Лихорадка      : [ ]"
+
+#: exp1572.py:454
+msgid "expedition.str.con"
+msgstr "Конкистадоры   : {progressbar}"
+
+#: exp1572.py:457
+msgid "expedition.str.ammo"
+msgstr "Снаряжение     : {progressbar}"
+
+#: exp1572.py:460
+msgid "expedition.str.food"
+msgstr "Еда            : {progressbar}"
+
+#: exp1572.py:463
+msgid "expedition.str.morale"
+msgstr "Боевой дух     : {progressbar}"
+
+#: exp1572.py:466
+msgid "expedition.str.move"
+msgstr "Пункты движения: {progressbar}"
+
+#: exp1572.py:469
+msgid "expedition.str.neighbors"
+msgstr "Соседние участки:"
+
+#: exp1572.py:487
+msgid "message.endGame.noCon"
+msgstr "Вы потеряли последнего конкистадора. Игра окончена :("
+
+#: exp1572.py:488
+msgid "message.decCon"
+msgstr "Потерян конкистадор. Осталось {con}"
+
+#: exp1572.py:493
+msgid "message.incCon"
+msgstr "У Вас новый конкистадор. Теперь вас {con}"
+
+#: exp1572.py:495
+msgid "message.incConMax"
+msgstr "Достигнут максимальный размер отряда"
+
+#: exp1572.py:500
+msgid "message.decAmmo"
+msgstr "Снаряжение и боеприпасы пропали. Кое-что осталось: {ammo}"
+
+#: exp1572.py:502
+msgid "message.decAmmoMin"
+msgstr "Достигнут минимум по снаряжению"
+
+#: exp1572.py:507
+msgid "message.incAmmo"
+msgstr "Снаряжение и боеприпасы пополнены: {ammo}"
+
+#: exp1572.py:510
+msgid "message.incAmmoMax"
+msgstr "Достигнут максимум по снаряжению"
+
+#: exp1572.py:515
+msgid "message.decFood"
+msgstr "Запасы пищи уменьшились. Остаток: {food}"
+
+#: exp1572.py:517
+msgid "message.decFoodMin"
+msgstr "Нехватка пищи"
+
+#: exp1572.py:523
+msgid "message.incFood"
+msgstr "Пополнены запасы пищи: {food}"
+
+#: exp1572.py:526
+msgid "message.incFoodMax"
+msgstr "Достигнут максимум запасов пищи"
+
+#: exp1572.py:531
+msgid "message.decmorale"
+msgstr "Боевой дух упал: {morale}"
+
+#: exp1572.py:533
+msgid "message.decmoraleMin"
+msgstr "Дезертирство"
+
+#: exp1572.py:539
+msgid "message.incmorale"
+msgstr "Боевой дух повышен: {morale}"
+
+#: exp1572.py:542
+msgid "message.incmoraleMax"
+msgstr "Достигнут максимум боевого духа"
+
+#: exp1572.py:547
+msgid "message.decMove"
+msgstr "Пункты движения уменьшились: {move}"
+
+#: exp1572.py:549
+msgid "message.decMoveMin"
+msgstr "Пунктов движения не может быть меньше 1"
+
+#: exp1572.py:554
+msgid "message.incMove"
+msgstr "Увеличены пункты движения: {move}"
+
+#: exp1572.py:557
+msgid "message.incMoveMax"
+msgstr "Достигнут максимум пунктов движения"
+
+#: exp1572.py:561
+msgid "message.feverSetUnableExpType"
+msgstr "Лихорадки удалось избежать!"
+
+#: exp1572.py:565
+msgid "message.feverSet"
+msgstr "Началась ЛИХОРАДКА!"
+
+#: exp1572.py:567
+msgid "message.feverSetAlready"
+msgstr "Ещё один конкистадор приболел..."
+
+#: exp1572.py:571
+msgid "message.deverUnset"
+msgstr "Лихорадка закончилась!!!"
+
+#: exp1572.py:575
+msgid "message.eclipseSet"
+msgstr "В следующие два контакта с туземцами выбираете результат!"
+
+#: exp1572.py:581
+msgid "message.foundFriendlySettlement"
+msgstr "Обнаружено дружественное поселение!"
+
+#: exp1572.py:583
+msgid "message.foundSettlement"
+msgstr "Обнаружено поселение!"
+
+#: exp1572.py:590
+msgid "menuHeader.foundTrail"
+msgstr "Найдена ТРОПА!!!"
+
+#: exp1572.py:591
+msgid "menuPrompt.foundTrail"
+msgstr "Выберите участок, в котором она заканчивается"
+
+#: exp1572.py:603
+msgid "message.foundBox"
+msgstr "Найден ящик с припасами!"
+
+#: exp1572.py:611
+msgid "exception.rediceNoAmmo"
+msgstr "Переброс за снаряжение невозможен"
+
+#: exp1572.py:619
+msgid "message.rediceExpType"
+msgstr "Тип экспедиции '{type}' повысил результат: {res}"
+
+#: exp1572.py:628 exp1572.py:990 common.py:24
+msgid "lands.swamp"
+msgstr "Трясины"
+
+#: exp1572.py:628 exp1572.py:733 common.py:25
+msgid "lands.hills"
+msgstr "Холмы"
+
+#: exp1572.py:628 common.py:27
+msgid "lands.jungle"
+msgstr "Джунгли"
+
+#: exp1572.py:632
+msgid "message.doWalk.landDec"
+msgstr "{land} снизили результат {dicesWalk}: {points}"
+
+#: exp1572.py:636 common.py:30
+msgid "lands.plains"
+msgstr "Равнины"
+
+#: exp1572.py:636 exp1572.py:728 exp1572.py:1031 common.py:29
+msgid "lands.lake"
+msgstr "Озеро"
+
+#: exp1572.py:640
+msgid "message.doWalk.landInc"
+msgstr "{land} повысили результат {dicesWalk}: {points}"
+
+#: exp1572.py:675
+msgid "exception.doMap.locationMapped"
+msgstr "Участок {loc} уже нанесён на карту!"
+
+#: exp1572.py:683
+msgid "message.doExplore.landDec"
+msgstr "{land} понизили результат {dices}: {points}"
+
+#: exp1572.py:688
+msgid "message.doExplore.incFriendly"
+msgstr "Дружественные поселения повысили результат: {points}"
+
+#: exp1572.py:691
+msgid "message.doExplore.decCon"
+msgstr "Потеря конкистадора ..."
+
+#: exp1572.py:694
+msgid "message.doExplore.decConExpType"
+msgstr "... заменена на потерю провизии!"
+
+#: exp1572.py:727
+msgid "exception.doContact1Dice"
+msgstr "На территории империи бросать только 1 кубик!"
+
+#: exp1572.py:730
+msgid "message.doContact.noContact"
+msgstr "На озере контакта нет"
+
+#: exp1572.py:736
+msgid "message.doContact.landInc"
+msgstr "{land} повысили результат {dices}: {points}"
+
+#: exp1572.py:760 common.py:28
+msgid "lands.forest"
+msgstr "Лес"
+
+#: exp1572.py:763
+msgid "message.doHunting.landInc"
+msgstr "{land} повысили результат {dices}: {points}"
+
+#: exp1572.py:768
+msgid "message.doHunting.friendlyInc"
+msgstr "Дружественные поселения повысили результат: {points}"
+
+#: exp1572.py:772
+msgid "message.doHunting.incExpType"
+msgstr "Тип экспедиции '{expType}' повысил результат: {points}"
+
+#: exp1572.py:810
+msgid "message.doWonder.princess"
+msgstr "Принцесса Канти проявит себя при контакте с туземцами"
+
+#: exp1572.py:816
+msgid "message.doWonder.diego"
+msgstr "Диего Мендоса добавляет джокера на этапе планирования"
+
+#: exp1572.py:836
+msgid "message.doWonder.lake"
+msgstr "Обнаружено Озеро Лагос де Оро! Оно занимает следующие участки:"
+
+#: exp1572.py:842
+msgid "exception.doWonder.unknownWonder"
+msgstr "Неизвестная достопримечательность: {wonder}"
+
+#: exp1572.py:846
+msgid "header.doFood"
+msgstr "ПРИЁМ ПИЩИ"
+
+#: exp1572.py:848
+msgid "menuHeader.doFood"
+msgstr "Через Ваш участок мигрируют стада животных."
+
+#: exp1572.py:849
+msgid "menuPrompt.doFood"
+msgstr "Потратить снаряжение для запаса провизии по максимуму?"
+
+#: exp1572.py:850
+msgid "doFood.menuIntemY"
+msgstr "Потратить единицу снаряжения"
+
+#: exp1572.py:851
+msgid "doFood.menuIntemN"
+msgstr "Оставить всё без изменений"
+
+#: exp1572.py:892
+msgid "header.doMove"
+msgstr "ПРОДВИЖЕНИЕ ПО КАРТЕ"
+
+#: exp1572.py:897
+msgid "menuHeader.doMove"
+msgstr "На карту нанесены такие соседние участки:"
+
+#: exp1572.py:899
+msgid "menuPrompt.doMove"
+msgstr "Выберите участок для продвижения"
+
+#: exp1572.py:919
+msgid "message.doMove.moveDone"
+msgstr "Ваш отряд переместился на участок {loc}"
+
+#: exp1572.py:934
+msgid "exception.proposeReRoll.noAmmo"
+msgstr "Недостаточно снаряжения для переброски кубиков"
+
+#: exp1572.py:937
+msgid "message.proposeReRollForAmmo"
+msgstr "Перебросить кубики (за Снаряжение) {dices}: "
+
+#: exp1572.py:940
+msgid "message.proposeReRoll"
+msgstr "Перебросить кубики {dices}: "
+
+#: exp1572.py:960
+msgid "message.reRollResult"
+msgstr "Результат переброса кубиков: {dices}"
+
+#: exp1572.py:979
+msgid "header.dicePlanFever"
+msgstr "ПЛАНИРОВАНИЕ (Лихорадочное)"
+
+#: exp1572.py:982
+msgid "header.dicePlan"
+msgstr "ПЛАНИРОВАНИЕ"
+
+#: exp1572.py:987
+msgid "message.dicePlan.diego"
+msgstr "Диего добавил джокер"
+
+#: exp1572.py:1002
+msgid "message.dicePlan.feverNoJockers"
+msgstr "Во время лихорадки нельзя использовать джокеры"
+
+#: exp1572.py:1004
+msgid "message.dicePlan"
+msgstr "Кубики планирования: {dices}"
+
+#: exp1572.py:1009
+msgid "menuHeader.dicePlan.useJockers"
+msgstr "Распределите имеющиеся джокеры по этапам (2-6). Например, 223."
+
+#: exp1572.py:1012
+msgid "menuPrompt.dicePlan.useJockers"
+msgstr "Напечатайте номера этапов по количеству джокеров ({j}): "
+
+#: exp1572.py:1033
+msgid "message.dicePlan.noContact"
+msgstr "На озере контакт с туземцами не возможен"
+
+#: exp1572.py:1042
+msgid "header.diceWalk"
+msgstr "ХОДЬБА"
+
+#: exp1572.py:1048
+msgid "message.diceWalk"
+msgstr "Результат броска кубиков: {dices}"
+
+#: exp1572.py:1053
+msgid "header.diceMap"
+msgstr "СОСТАВЛЕНИЕ КАРТЫ"
+
+#: exp1572.py:1056
+msgid "menuHeader.diceMap"
+msgstr "Для картографирования доступны такие участки:"
+
+#: exp1572.py:1058
+msgid "menuPrompt.diceMap"
+msgstr "Выберите участок для нанесения на карту"
+
+#: exp1572.py:1083
+msgid "message.diceMap.dices"
+msgstr "Кубики составления карты: {dices}"
+
+#: exp1572.py:1086
+msgid "message.diceMap.mapDone"
+msgstr "На карту нанесён ({direction}) новый участок: {loc}"
+
+#: exp1572.py:1089
+msgid "message.diceMap.noLocations"
+msgstr "Все соседние участки уже нанесены на карту"
+
+#: exp1572.py:1093
+msgid "header.diceExplore"
+msgstr "ИССЛЕДОВАНИЕ"
+
+#: exp1572.py:1100
+msgid "message.diceExplore.dices"
+msgstr "Результат броска кубиков: {dices}"
+
+#: exp1572.py:1105
+msgid "header.diceContact"
+msgstr "КОНТАКТ С ТУЗЕМЦАМИ"
+
+#: exp1572.py:1109
+msgid "menuHeader.diceContact.eclipse"
+msgstr "Однажды Вы предсказали туземцам солнечное затмение."
+
+#: exp1572.py:1111
+msgid "menuPrompt.diceContact.eclipse"
+msgstr "Выберите желаемый результат контакта с туземцами"
+
+#: exp1572.py:1136
+msgid "header.diceHunting"
+msgstr "ОХОТА"
+
+#: exp1572.py:1152
+msgid "message.playDay.distance"
+msgstr "Расстояние до цели: {distance}"
+
+#: exp1572.py:1155
+msgid "message.playDay.trails"
+msgstr "Имеются тропы на следующие участки:"
+
+#: exp1572.py:1176
+msgid "message.gameover.win"
+msgstr "Победа"
+
+#: exp1572.py:1179
+msgid "message.gameover.defeat"
+msgstr "Вы проиграли"
+
+#: exp1572.py:1180
+#, python-brace-format
+msgid "message.game.score {score}"
+msgstr "Набрано очков: {score}"
+
+#: exp1572.py:1184
+msgid "menu.main.expType"
+msgstr "Игра"
+
+#: exp1572.py:1185
+msgid "menu.main.options"
+msgstr "Настройки"
+
+#: exp1572.py:1186
+msgid "menu.main.quit"
+msgstr "Выход"
+
+#: exp1572.py:1191
+msgid "menu.main.header"
+msgstr "1572 - ПОТЕРЯННАЯ ЭКСПЕДИЦИЯ"
+
+#: exp1572.py:1191
+msgid "menu.main.prompt"
+msgstr "Сделайте выбор: "
+
+#: exp1572.py:1193
+msgid "menu.play.random"
+msgstr "Случайная"
+
+#: exp1572.py:1196
+msgid "menu.play.back"
+msgstr "Вернуться в главное меню"
+
+#: exp1572.py:1198
+msgid "menu.play.header"
+msgstr "Тип экспедиции"
+
+#: exp1572.py:1198
+msgid "menu.play.prompt"
+msgstr "Выберите игру: "
+
+#: exp1572.py:1209
+msgid "menu.options.back"
+msgstr "Вернуться в главное меню"
+
+#: exp1572.py:1210
+msgid "menu.options.header"
+msgstr "Настройки"
+
+#: exp1572.py:1210
+msgid "menu.options.prompt"
+msgstr "Сделайте выбор"
+
+#: exp1572.py:1222
+msgid "menu.locales.back"
+msgstr "Вернуться в предыдущее меню"
+
+#: exp1572.py:1223
+msgid "menu.locale.header"
+msgstr "Доступны следующие языки:"
+
+#: exp1572.py:1223
+msgid "menu.locale.prompt"
+msgstr "Выберите язык: "
+
+#: settings.py:8
+msgid "settings.fdmd.description"
+msgstr ""
+"Дружественное поселение туземцев на участке предотвращает потерю пунктов "
+"движения из-за обнаружения поселения туземцев"
+
+#: settings.py:9
+msgid "settings.wfcl.description"
+msgstr ""
+"Если при броске кубиков в фазе Картографирования на участке с рекой выпадает "
+"1, водопад обнаруживается на текущем участке (True) или на соседнем (False)"
+
+#: settings.py:10
+msgid "settings.det.description"
+msgstr "Показывать описание типа экспедиции каждый день"
+
+#: settings.py:11
+msgid "settings.locale.description"
+msgstr "Язык интерфейса"
+
+#: dres.py:4 common.py:60
+msgid "Империя воинственных туземцев"
+msgstr ""
+
+#: dres.py:5 dres.py:29 common.py:61 common.py:85
+msgid "Лихорадка"
+msgstr ""
+
+#: dres.py:6 dres.py:32 dres.py:33 common.py:62 common.py:88 common.py:89
+msgid "Поселение туземцев"
+msgstr ""
+
+#: dres.py:7 dres.py:35 common.py:63 common.py:91
+msgid "Тропа"
+msgstr ""
+
+#: dres.py:8 common.py:64
+msgid "Еда и дружественное поселение"
+msgstr ""
+
+#: dres.py:9 common.py:65
+msgid "Ящик с припасами и дружественное поселение"
+msgstr ""
+
+#: dres.py:15 dres.py:16 dres.py:28 dres.py:54 dres.py:55 common.py:71
+#: common.py:72 common.py:84 common.py:110 common.py:111
+msgid "Потеря конкистадора"
+msgstr ""
+
+#: dres.py:15 common.py:71
+msgid "Родригес не вернулся в лагерь"
+msgstr ""
+
+#: dres.py:16 common.py:72
+msgid "Санчо не проснулся"
+msgstr ""
+
+#: dres.py:17 dres.py:18 common.py:73 common.py:74
+msgid "Пункт движения и лихорадка"
+msgstr ""
+
+#: dres.py:19 dres.py:20 dres.py:21 common.py:75 common.py:76 common.py:77
+msgid "Пункт движения и упадок духа"
+msgstr ""
+
+#: dres.py:22 common.py:78
+msgid "Пункт движения"
+msgstr ""
+
+#: dres.py:23 common.py:79
+msgid "Два пункта движения"
+msgstr ""
+
+#: dres.py:24 common.py:80
+msgid "Три пункта движения"
+msgstr ""
+
+#: dres.py:25 common.py:81
+msgid "Четыре пункта движения"
+msgstr ""
+
+#: dres.py:30 dres.py:31 common.py:86 common.py:87
+msgid "Потеря пункта движения"
+msgstr ""
+
+#: dres.py:34 common.py:90
+msgid "Подъём духа"
+msgstr ""
+
+#: dres.py:36 dres.py:37 dres.py:38 common.py:92 common.py:93 common.py:94
+msgid "Достопримечательность"
+msgstr ""
+
+#: dres.py:56 common.py:112
+msgid "Упадок духа"
+msgstr ""
+
+#: dres.py:57 common.py:113
+msgid "Еда и упадок духа"
+msgstr ""
+
+#: dres.py:58 dres.py:59 dres.py:60 common.py:114 common.py:115 common.py:116
+msgid "Еда"
+msgstr ""
+
+#: dres.py:61 dres.py:62 common.py:117 common.py:118
+msgid "Еда на два дня"
+msgstr ""
+
+#: dres.py:63 dres.py:64 common.py:119 common.py:120
+msgid "Еда на два дня и подъём духа"
+msgstr ""
+
+#: common.py:3
+msgid "expeditiontypes.cartography.name"
+msgstr "Картографическая"
+
+#: common.py:4
+msgid "expeditiontypes.cartography.description"
+msgstr ""
+"Если в конце дня у Вас осталось больше двух пунктов движения, Вы можете "
+"проложить тропу из текущего участка в соседний (это можно делать не больше "
+"одного раза на каждом участке)"
+
+#: common.py:6
+msgid "expeditiontypes.botany.name"
+msgstr "Ботаническая"
+
+#: common.py:7
+msgid "expeditiontypes.botany.description"
+msgstr ""
+"Вам не страшна лихорадка. На этапе охоты результат броска костей "
+"увеличивается на 1"
+
+#: common.py:9
+msgid "expeditiontypes.military.name"
+msgstr "Военная"
+
+#: common.py:10
+msgid "expeditiontypes.military.description"
+msgstr ""
+"При использовании снаряжения результат броска костей увеличивается на 2"
+
+#: common.py:12
+msgid "expeditiontypes.archeology.name"
+msgstr "Археологическая"
+
+#: common.py:13
+msgid "expeditiontypes.archeology.description"
+msgstr ""
+"Если Вы используете тропу для продвижения на участок, местность в котором "
+"отличается от местности нынешнего участка, то всегда обнаруживаете "
+"достопримечательность"
+
+#: common.py:15
+msgid "expeditiontypes.religious.name"
+msgstr "Религиозная"
+
+#: common.py:16
+msgid "expeditiontypes.religious.description"
+msgstr ""
+"Все обнаруженные поселения туземцев оказываются дружественными (но не "
+"империи)"
+
+#: common.py:18
+msgid "expeditiontypes.doctor.name"
+msgstr "Врачебная"
+
+#: common.py:19
+msgid "expeditiontypes.doctor.description"
+msgstr ""
+"Для избавления от лихорадки достаточно 2 джокера (вместо обычных 3). При "
+"выпадении значка смерти Вы теряете 1 еду вместо конкистадора (если еды нет - "
+"теряете конкистадора)"
+
+#: common.py:34
+msgid "dirs.nomove"
+msgstr "На месте            "
+
+#: common.py:35
+msgid "dirs.nord"
+msgstr "Север               "
+
+#: common.py:36
+msgid "dirs.nord-east"
+msgstr "Северо-восток       "
+
+#: common.py:37
+msgid "dirs.south-east"
+msgstr "Юго-восток          "
+
+#: common.py:38
+msgid "dirs.south"
+msgstr "Юг                  "
+
+#: common.py:39
+msgid "dirs.south-west"
+msgstr "Юго-запад           "
+
+#: common.py:40
+msgid "dirs.nord-west"
+msgstr "Северо-запад        "
+
+#: common.py:50
+msgid "dirs_extesion.nord-nord-east"
+msgstr "Северо-северо-восток"
+
+#: common.py:51
+msgid "dirs_extesion.east"
+msgstr "Восток              "
+
+#: common.py:52
+msgid "dirs_extesion.south-south-east"
+msgstr "Юго-юго-восток      "
+
+#: common.py:53
+msgid "dirs_extesion.south-south-west"
+msgstr "Юго-юго-запад       "
+
+#: common.py:54
+msgid "dirs_extesion.west"
+msgstr "Запад               "
+
+#: common.py:55
+msgid "dirs_extesion.nord-nord-west"
+msgstr "Северо-северо-запад "
+
+#~ msgid "dirs_extesion.west   "
+#~ msgstr "Запад"

@@ -1,0 +1,813 @@
+# Translation catalog for exp1572
+# Copyright (C) 2019 Wit Serdakovskiy
+# This file is distributed under the same license as the exp1572 package.
+# Wit Serdakovskiy <witdba@gmail.com>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: exp1572 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-26 14:41+0300\n"
+"PO-Revision-Date: 2019-05-26 19:34+0300\n"
+"Last-Translator: wit <witdba@gmail.com>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: exp1572.py:128
+msgid "location.str.noterrain"
+msgstr "Unknown terrain"
+
+#: exp1572.py:130
+msgid "location.str.river"
+msgstr " River"
+
+#: exp1572.py:132
+msgid "location.str.waterfall"
+msgstr " with a cataract"
+
+#: exp1572.py:137
+#, python-brace-format
+msgid "location.str.settlements: [{s}]"
+msgstr " Settlements: [{s}]"
+
+#: exp1572.py:139
+#, python-brace-format
+msgid "location.str.sights: {sights}"
+msgstr " Interests: {sights}"
+
+#: exp1572.py:144
+msgid "map.lake.name"
+msgstr "Lagos De Oro"
+
+#: exp1572.py:145
+msgid "map.camp.name"
+msgstr "Ruined Mission"
+
+#: exp1572.py:146
+msgid "map.herd.name"
+msgstr "Migration"
+
+#: exp1572.py:147
+msgid "map.eclipse.name"
+msgstr "Predict Eclipse"
+
+#: exp1572.py:148
+msgid "map.princess.name"
+msgstr "Princess Kantyi"
+
+#: exp1572.py:149
+msgid "map.diego.name"
+msgstr "Diego Mendoza"
+
+#: exp1572.py:151
+msgid "map.wonder.name"
+msgstr "Natural Wonder"
+
+#: exp1572.py:162 exp1572.py:163 exp1572.py:164 exp1572.py:628 exp1572.py:760
+#: common.py:26
+msgid "lands.mountains"
+msgstr "Mountains"
+
+#: exp1572.py:371
+msgid "exception.locationAlreadyMapped"
+msgstr "Location {loc} already mapped!"
+
+#: exp1572.py:375
+msgid "message.foundEmpire"
+msgstr "You are in the center of the empire of hostile natives!"
+
+#: exp1572.py:377
+msgid "message.foundEmpireInsideEmpire"
+msgstr "Empire of hostile natives expanded its borders"
+
+#: exp1572.py:381
+msgid "message.empireLocations"
+msgstr "Empire include:"
+
+#: exp1572.py:390
+msgid "exception.wrongLocationForWaterfall"
+msgstr "A cataract is possible only on the river"
+
+#: exp1572.py:393
+msgid "message.foundWaterfallCurrentLocation"
+msgstr "A cataract is found nearby"
+
+#: exp1572.py:399
+msgid "message.foundWaterfallNextLocation"
+msgstr "The wind carried the noise of a cataract from the east"
+
+#: exp1572.py:436
+msgid "expedition.str.expeditionTypeName"
+msgstr "{type} expedition"
+
+#: exp1572.py:438
+msgid "expedition.str.expeditionTypeDescription"
+msgstr ": {description}"
+
+#: exp1572.py:441
+msgid "expedition.str.day"
+msgstr "Day {day} {progressbar}"
+
+#: exp1572.py:445 exp1572.py:447
+msgid "expedition.str.location"
+msgstr "You are here: {loc}"
+
+#: exp1572.py:450
+msgid "expedition.str.feverTrue"
+msgstr "Fever        : [X]"
+
+#: exp1572.py:452
+msgid "expedition.str.feverFalse"
+msgstr "Fever        : [ ]"
+
+#: exp1572.py:454
+msgid "expedition.str.con"
+msgstr "Conquistadors: {progressbar}"
+
+#: exp1572.py:457
+msgid "expedition.str.ammo"
+msgstr "Muskets      : {progressbar}"
+
+#: exp1572.py:460
+msgid "expedition.str.food"
+msgstr "Food         : {progressbar}"
+
+#: exp1572.py:463
+msgid "expedition.str.morale"
+msgstr "Morale       : {progressbar}"
+
+#: exp1572.py:466
+msgid "expedition.str.move"
+msgstr "Movement     : {progressbar}"
+
+#: exp1572.py:469
+msgid "expedition.str.neighbors"
+msgstr "Neighboring  :"
+
+#: exp1572.py:487
+msgid "message.endGame.noCon"
+msgstr "You lost the last conquistador. Game over :("
+
+#: exp1572.py:488
+msgid "message.decCon"
+msgstr "Conqiustador is lost. Remains: {con}"
+
+#: exp1572.py:493
+msgid "message.incCon"
+msgstr "A conqiustador is joining your expedition. Now you are {con}"
+
+#: exp1572.py:495
+msgid "message.incConMax"
+msgstr "The maximum size of the expedition is reached"
+
+#: exp1572.py:500
+msgid "message.decAmmo"
+msgstr "The musket is lost. Remains: {ammo}"
+
+#: exp1572.py:502
+msgid "message.decAmmoMin"
+msgstr "The minimum for the muskets is reached"
+
+#: exp1572.py:507
+msgid "message.incAmmo"
+msgstr "You found a musket: {ammo}"
+
+#: exp1572.py:510
+msgid "message.incAmmoMax"
+msgstr "The maximun for the muskets is reached"
+
+#: exp1572.py:515
+msgid "message.decFood"
+msgstr "Food stocks have decreased. The remainder: {food}"
+
+#: exp1572.py:517
+msgid "message.decFoodMin"
+msgstr "Lack of food"
+
+#: exp1572.py:523
+msgid "message.incFood"
+msgstr "Food stocks replenished: {food}"
+
+#: exp1572.py:526
+msgid "message.incFoodMax"
+msgstr "The maximum for food stocks is reached"
+
+#: exp1572.py:531
+msgid "message.decmorale"
+msgstr "The morale is decreased: {morale}"
+
+#: exp1572.py:533
+msgid "message.decmoraleMin"
+msgstr "Desertion"
+
+#: exp1572.py:539
+msgid "message.incmorale"
+msgstr "The morale is increased: {morale}"
+
+#: exp1572.py:542
+msgid "message.incmoraleMax"
+msgstr "The maximum for morale is reached"
+
+#: exp1572.py:547
+msgid "message.decMove"
+msgstr "Movement points decreased: {move}"
+
+#: exp1572.py:549
+msgid "message.decMoveMin"
+msgstr "Movement points cannot be less than 1"
+
+#: exp1572.py:554
+msgid "message.incMove"
+msgstr "Movement points increased: {move}"
+
+#: exp1572.py:557
+msgid "message.incMoveMax"
+msgstr "The maximum of movement points is reached"
+
+#: exp1572.py:561
+msgid "message.feverSetUnableExpType"
+msgstr "Fever avoided!"
+
+#: exp1572.py:565
+msgid "message.feverSet"
+msgstr "FEVER has begun!"
+
+#: exp1572.py:567
+msgid "message.feverSetAlready"
+msgstr "Another conquistador is unwell..."
+
+#: exp1572.py:571
+msgid "message.deverUnset"
+msgstr "Fever is over!!!"
+
+#: exp1572.py:575
+msgid "message.eclipseSet"
+msgstr "For the next two contacts with the natives you'll choose the result!"
+
+#: exp1572.py:581
+msgid "message.foundFriendlySettlement"
+msgstr "Friendly settlement discovered!"
+
+#: exp1572.py:583
+msgid "message.foundSettlement"
+msgstr "Settlement detected!"
+
+#: exp1572.py:590
+msgid "menuHeader.foundTrail"
+msgstr "The trail is found!!!"
+
+#: exp1572.py:591
+msgid "menuPrompt.foundTrail"
+msgstr "Choose the end location for the trail just found"
+
+#: exp1572.py:603
+msgid "message.foundBox"
+msgstr "Cache is found"
+
+#: exp1572.py:611
+msgid "exception.rediceNoAmmo"
+msgstr "It's unable to re-roll for a musket"
+
+#: exp1572.py:619
+msgid "message.rediceExpType"
+msgstr "Expedition type '{type}' isncreases the result: {res}"
+
+#: exp1572.py:628 exp1572.py:990 common.py:24
+msgid "lands.swamp"
+msgstr "Swamp"
+
+#: exp1572.py:628 exp1572.py:733 common.py:25
+msgid "lands.hills"
+msgstr "Hills"
+
+#: exp1572.py:628 common.py:27
+msgid "lands.jungle"
+msgstr "Jungle"
+
+#: exp1572.py:632
+msgid "message.doWalk.landDec"
+msgstr "{land} lowered the result {dicesWalk}: {points}"
+
+#: exp1572.py:636 common.py:30
+msgid "lands.plains"
+msgstr "Plains"
+
+#: exp1572.py:636 exp1572.py:728 exp1572.py:1031 common.py:29
+msgid "lands.lake"
+msgstr "Lake"
+
+#: exp1572.py:640
+msgid "message.doWalk.landInc"
+msgstr "{land} increased the result {dicesWalk}: {points}"
+
+#: exp1572.py:675
+msgid "exception.doMap.locationMapped"
+msgstr "Location {loc} already mapped!"
+
+#: exp1572.py:683
+msgid "message.doExplore.landDec"
+msgstr "{land} lowered the result {dices}: {points}"
+
+#: exp1572.py:688
+msgid "message.doExplore.incFriendly"
+msgstr "Friendly settlements increased the result: {points}"
+
+#: exp1572.py:691
+msgid "message.doExplore.decCon"
+msgstr "A loss of a conquistador ..."
+
+#: exp1572.py:694
+msgid "message.doExplore.decConExpType"
+msgstr "... was replaced for a food loss!"
+
+#: exp1572.py:727
+msgid "exception.doContact1Dice"
+msgstr "It's unable to roll more than 1 dice on the empire's territory!"
+
+#: exp1572.py:730
+msgid "message.doContact.noContact"
+msgstr "It's unable to contact on the lake"
+
+#: exp1572.py:736
+msgid "message.doContact.landInc"
+msgstr "{land} increased the result {dices}: {points}"
+
+#: exp1572.py:760 common.py:28
+msgid "lands.forest"
+msgstr "Forest"
+
+#: exp1572.py:763
+msgid "message.doHunting.landInc"
+msgstr "{land} increased the result {dices}: {points}"
+
+#: exp1572.py:768
+msgid "message.doHunting.friendlyInc"
+msgstr "Friendly settlements increased the result: {points}"
+
+#: exp1572.py:772
+msgid "message.doHunting.incExpType"
+msgstr "Expedition type '{expType}' increased the result: {points}"
+
+#: exp1572.py:810
+msgid "message.doWonder.princess"
+msgstr "Princess Kantyi will protect you against 1's and 2's during contacts"
+
+#: exp1572.py:816
+msgid "message.doWonder.diego"
+msgstr "Diego Mendoza will add a WILD during planning phases"
+
+#: exp1572.py:836
+msgid "message.doWonder.lake"
+msgstr "Lagos De Oro found! It relies on:"
+
+#: exp1572.py:842
+msgid "exception.doWonder.unknownWonder"
+msgstr "Unknown interest: {wonder}"
+
+#: exp1572.py:846
+msgid "header.doFood"
+msgstr "EAT RATIONS"
+
+#: exp1572.py:848
+msgid "menuHeader.doFood"
+msgstr "Buffalo herds are migrating thru your location."
+
+#: exp1572.py:849
+msgid "menuPrompt.doFood"
+msgstr "Do you want to maximize your food stocks for a musket?"
+
+#: exp1572.py:850
+msgid "doFood.menuIntemY"
+msgstr "Spend a musket"
+
+#: exp1572.py:851
+msgid "doFood.menuIntemN"
+msgstr "Leave everything unchanged"
+
+#: exp1572.py:892
+msgid "header.doMove"
+msgstr "MAP TRAVEL"
+
+#: exp1572.py:897
+msgid "menuHeader.doMove"
+msgstr "Following neighboring locations are mapped :"
+
+#: exp1572.py:899
+msgid "menuPrompt.doMove"
+msgstr "Choose the location to move on"
+
+#: exp1572.py:919
+msgid "message.doMove.moveDone"
+msgstr "Your expedition has moved successfully to {loc}"
+
+#: exp1572.py:934
+msgid "exception.proposeReRoll.noAmmo"
+msgstr "Not enough muskets to re-roll dices"
+
+#: exp1572.py:937
+msgid "message.proposeReRollForAmmo"
+msgstr "Re-roll dices (for a musket) {dices}: "
+
+#: exp1572.py:940
+msgid "message.proposeReRoll"
+msgstr "Re-roll dices {dices}: "
+
+#: exp1572.py:960
+msgid "message.reRollResult"
+msgstr "Re-roll results: {dices}"
+
+#: exp1572.py:979
+msgid "header.dicePlanFever"
+msgstr "PLANNING PHASE (you're in fever)"
+
+#: exp1572.py:982
+msgid "header.dicePlan"
+msgstr "PLANNIG PHASE"
+
+#: exp1572.py:987
+msgid "message.dicePlan.diego"
+msgstr "Diego has added a WILD"
+
+#: exp1572.py:1002
+msgid "message.dicePlan.feverNoJockers"
+msgstr "It's unable to use WILDs during fever"
+
+#: exp1572.py:1004
+msgid "message.dicePlan"
+msgstr "Planning dices: {dices}"
+
+#: exp1572.py:1009
+msgid "menuHeader.dicePlan.useJockers"
+msgstr "Spread your WILDs amongst phases (2-6). For example, type '223'."
+
+#: exp1572.py:1012
+msgid "menuPrompt.dicePlan.useJockers"
+msgstr "Type phases' numbers in accordance with amount of your WILDs ({j}): "
+
+#: exp1572.py:1033
+msgid "message.dicePlan.noContact"
+msgstr "It's unable to contact with natives on the lake"
+
+#: exp1572.py:1042
+msgid "header.diceWalk"
+msgstr "MOVEMENT PHASE"
+
+#: exp1572.py:1048
+msgid "message.diceWalk"
+msgstr "Planning Dices: {dices}"
+
+#: exp1572.py:1053
+msgid "header.diceMap"
+msgstr "MAPPING PHASE"
+
+#: exp1572.py:1056
+msgid "menuHeader.diceMap"
+msgstr "Not mapped locations:"
+
+#: exp1572.py:1058
+msgid "menuPrompt.diceMap"
+msgstr "Choose the location for mapping"
+
+#: exp1572.py:1083
+msgid "message.diceMap.dices"
+msgstr "Mapping dices: {dices}"
+
+#: exp1572.py:1086
+msgid "message.diceMap.mapDone"
+msgstr "New location {loc} is mapped ({direction})"
+
+#: exp1572.py:1089
+msgid "message.diceMap.noLocations"
+msgstr "All neighboring locations already mapped"
+
+#: exp1572.py:1093
+msgid "header.diceExplore"
+msgstr "EXPLORING PHASE"
+
+#: exp1572.py:1100
+msgid "message.diceExplore.dices"
+msgstr "Exploring dices: {dices}"
+
+#: exp1572.py:1105
+msgid "header.diceContact"
+msgstr "NATIVE CONTACT PHASE"
+
+#: exp1572.py:1109
+msgid "menuHeader.diceContact.eclipse"
+msgstr "Once you predicted a solar eclipse for the natives."
+
+#: exp1572.py:1111
+msgid "menuPrompt.diceContact.eclipse"
+msgstr "Choose the desired result of the native contact"
+
+#: exp1572.py:1136
+msgid "header.diceHunting"
+msgstr "HUNTING PHASE"
+
+#: exp1572.py:1152
+msgid "message.playDay.distance"
+msgstr "Distance to the target: {distance}"
+
+#: exp1572.py:1155
+msgid "message.playDay.trails"
+msgstr "There are following trails from current location:"
+
+#: exp1572.py:1176
+msgid "message.gameover.win"
+msgstr "Game over. You win!"
+
+#: exp1572.py:1179
+msgid "message.gameover.defeat"
+msgstr "Game over. You're lost."
+
+#: exp1572.py:1180
+#, python-brace-format
+msgid "message.game.score {score}"
+msgstr "Your score {score}"
+
+#: exp1572.py:1184
+msgid "menu.main.expType"
+msgstr "Play"
+
+#: exp1572.py:1185
+msgid "menu.main.options"
+msgstr "Options"
+
+#: exp1572.py:1186
+msgid "menu.main.quit"
+msgstr "Quit"
+
+#: exp1572.py:1191
+msgid "menu.main.header"
+msgstr "1572 - The Lost Expedition"
+
+#: exp1572.py:1191
+msgid "menu.main.prompt"
+msgstr "Make choice"
+
+#: exp1572.py:1193
+msgid "menu.play.random"
+msgstr "Random"
+
+#: exp1572.py:1196
+msgid "menu.play.back"
+msgstr "Back to the main menu"
+
+#: exp1572.py:1198
+msgid "menu.play.header"
+msgstr "Expedition Type"
+
+#: exp1572.py:1198
+msgid "menu.play.prompt"
+msgstr "Choose an Expedition Type to play"
+
+#: exp1572.py:1209
+msgid "menu.options.back"
+msgstr "Back to the main menu"
+
+#: exp1572.py:1210
+msgid "menu.options.header"
+msgstr "Options"
+
+#: exp1572.py:1210
+msgid "menu.options.prompt"
+msgstr "Make choice"
+
+#: exp1572.py:1222
+msgid "menu.locales.back"
+msgstr "Back to the main menu"
+
+#: exp1572.py:1223
+msgid "menu.locale.header"
+msgstr "Interface Language"
+
+#: exp1572.py:1223
+msgid "menu.locale.prompt"
+msgstr "Choose language"
+
+#: settings.py:8
+msgid "settings.fdmd.description"
+msgstr ""
+"Friendly settlement on your location prevents move point loss caused by new "
+"settlement finding"
+
+#: settings.py:9
+msgid "settings.wfcl.description"
+msgstr ""
+"Cataract appears on your (True) or neighbor (False) location in case you "
+"roll dice 1 in Cartography phase"
+
+#: settings.py:10
+msgid "settings.det.description"
+msgstr "Show the expedition type description every day"
+
+#: settings.py:11
+msgid "settings.locale.description"
+msgstr "Interface language"
+
+#: dres.py:4 common.py:60
+msgid "Империя воинственных туземцев"
+msgstr ""
+
+#: dres.py:5 dres.py:29 common.py:61 common.py:85
+msgid "Лихорадка"
+msgstr ""
+
+#: dres.py:6 dres.py:32 dres.py:33 common.py:62 common.py:88 common.py:89
+msgid "Поселение туземцев"
+msgstr ""
+
+#: dres.py:7 dres.py:35 common.py:63 common.py:91
+msgid "Тропа"
+msgstr ""
+
+#: dres.py:8 common.py:64
+msgid "Еда и дружественное поселение"
+msgstr ""
+
+#: dres.py:9 common.py:65
+msgid "Ящик с припасами и дружественное поселение"
+msgstr ""
+
+#: dres.py:15 dres.py:16 dres.py:28 dres.py:54 dres.py:55 common.py:71
+#: common.py:72 common.py:84 common.py:110 common.py:111
+msgid "Потеря конкистадора"
+msgstr ""
+
+#: dres.py:15 common.py:71
+msgid "Родригес не вернулся в лагерь"
+msgstr ""
+
+#: dres.py:16 common.py:72
+msgid "Санчо не проснулся"
+msgstr ""
+
+#: dres.py:17 dres.py:18 common.py:73 common.py:74
+msgid "Пункт движения и лихорадка"
+msgstr ""
+
+#: dres.py:19 dres.py:20 dres.py:21 common.py:75 common.py:76 common.py:77
+msgid "Пункт движения и упадок духа"
+msgstr ""
+
+#: dres.py:22 common.py:78
+msgid "Пункт движения"
+msgstr ""
+
+#: dres.py:23 common.py:79
+msgid "Два пункта движения"
+msgstr ""
+
+#: dres.py:24 common.py:80
+msgid "Три пункта движения"
+msgstr ""
+
+#: dres.py:25 common.py:81
+msgid "Четыре пункта движения"
+msgstr ""
+
+#: dres.py:30 dres.py:31 common.py:86 common.py:87
+msgid "Потеря пункта движения"
+msgstr ""
+
+#: dres.py:34 common.py:90
+msgid "Подъём духа"
+msgstr ""
+
+#: dres.py:36 dres.py:37 dres.py:38 common.py:92 common.py:93 common.py:94
+msgid "Достопримечательность"
+msgstr ""
+
+#: dres.py:56 common.py:112
+msgid "Упадок духа"
+msgstr ""
+
+#: dres.py:57 common.py:113
+msgid "Еда и упадок духа"
+msgstr ""
+
+#: dres.py:58 dres.py:59 dres.py:60 common.py:114 common.py:115 common.py:116
+msgid "Еда"
+msgstr ""
+
+#: dres.py:61 dres.py:62 common.py:117 common.py:118
+msgid "Еда на два дня"
+msgstr ""
+
+#: dres.py:63 dres.py:64 common.py:119 common.py:120
+msgid "Еда на два дня и подъём духа"
+msgstr ""
+
+#: common.py:3
+msgid "expeditiontypes.cartography.name"
+msgstr "Cartography"
+
+#: common.py:4
+msgid "expeditiontypes.cartography.description"
+msgstr ""
+"You may place a trail once per hex if you end Phase 12 of your turn with 3 "
+"or more Movement Progress"
+
+#: common.py:6
+msgid "expeditiontypes.botany.name"
+msgstr "Botany"
+
+#: common.py:7
+msgid "expeditiontypes.botany.description"
+msgstr ""
+"You are immune to fever icons. Add 1 to your Hunting Score total (you are "
+"foraging instead)"
+
+#: common.py:9
+msgid "expeditiontypes.military.name"
+msgstr "Military"
+
+#: common.py:10
+msgid "expeditiontypes.military.description"
+msgstr "Add 2 to your score when you use a Musket"
+
+#: common.py:12
+msgid "expeditiontypes.archeology.name"
+msgstr "Archeology"
+
+#: common.py:13
+msgid "expeditiontypes.archeology.description"
+msgstr ""
+"Trails will always lead to an interest in the next hex if the terrain is "
+"different than your current hex"
+
+#: common.py:15
+msgid "expeditiontypes.religious.name"
+msgstr "Religious"
+
+#: common.py:16
+msgid "expeditiontypes.religious.description"
+msgstr "All villages are peaceful villages (but not the empire)"
+
+#: common.py:18
+msgid "expeditiontypes.doctor.name"
+msgstr "Doctor"
+
+#: common.py:19
+msgid "expeditiontypes.doctor.description"
+msgstr ""
+"Two or more WILDs break the Fever. Death Icons remove Food instead of "
+"Conquistadors"
+
+#: common.py:34
+msgid "dirs.nomove"
+msgstr "Stay in place  "
+
+#: common.py:35
+msgid "dirs.nord"
+msgstr "North          "
+
+#: common.py:36
+msgid "dirs.nord-east"
+msgstr "Northeast      "
+
+#: common.py:37
+msgid "dirs.south-east"
+msgstr "Southeast      "
+
+#: common.py:38
+msgid "dirs.south"
+msgstr "South          "
+
+#: common.py:39
+msgid "dirs.south-west"
+msgstr "Southwest      "
+
+#: common.py:40
+msgid "dirs.nord-west"
+msgstr "Northwest      "
+
+#: common.py:50
+msgid "dirs_extesion.nord-nord-east"
+msgstr "North-northeast"
+
+#: common.py:51
+msgid "dirs_extesion.east"
+msgstr "East           "
+
+#: common.py:52
+msgid "dirs_extesion.south-south-east"
+msgstr "South-southeast"
+
+#: common.py:53
+msgid "dirs_extesion.south-south-west"
+msgstr "South-southwest"
+
+#: common.py:54
+msgid "dirs_extesion.west"
+msgstr "West           "
+
+#: common.py:55
+msgid "dirs_extesion.nord-nord-west"
+msgstr "North-northwest"
