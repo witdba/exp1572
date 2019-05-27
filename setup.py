@@ -44,7 +44,7 @@ def create_mo_files():
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 	long_description = f.read()
 
-with open(os.path.join(here, 'VERSION')) as version_file:
+with open(path.join(here, 'VERSION')) as version_file:
 	version = version_file.read().strip()
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
@@ -172,7 +172,7 @@ setup(
 	#
 	# For an analysis of "install_requires" vs pip's requirements files see:
 	# https://packaging.python.org/en/latest/requirements.html
-	install_requires=['babel, gettext, glob, os, json, importlib'],  # Optional
+	install_requires=['babel', 'gettext', 'glob', 'os', 'json', 'importlib'],  # Optional
 
 	# List additional groups of dependencies here (e.g. development
 	# dependencies). Users will be able to install these using the "extras"
