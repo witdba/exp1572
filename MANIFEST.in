@@ -1,0 +1,4 @@
+include VERSION
+include exp1572/settings.json
+include exp1572/locales/*/LC_MESSAGES/exp1572.mo
+
