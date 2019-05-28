@@ -1,6 +1,8 @@
 import json
+from os import path
 
-with open('settings.json') as sfile:
+here = path.abspath(path.dirname(__file__))
+with open(path.join(here, 'settings.json')) as sfile:
 	VALUES = json.load(sfile)
 
 try:
