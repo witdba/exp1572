@@ -7,10 +7,13 @@ https://github.com/pypa/sampleproject
 import glob
 import pathlib
 import subprocess
+from shutil import copyfile
+
 
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
-from os import path
+from setuptools.command.install import install
+import os
 # io.open is needed for projects that support Python 2.7
 # It ensures open() defaults to text mode with universal newlines,
 # and accepts an argument to specify the text encoding
@@ -18,7 +21,9 @@ from os import path
 # SKIP
 # from io import open
 
-here = path.abspath(path.dirname(__file__))
+here = os.path.abspath(os.path.dirname(__file__))
+settingsDirName = os.path.join(os.path.expanduser('~'), '.' + name)
+settingsFileName = 'settings.json'
 
 name = 'exp1572'
 description = 'Console game manager for the "1572: The Lost Expedition" solitaire game'
@@ -40,13 +45,26 @@ def create_mo_files():
 
 	return mo_files
 
+def put_settings():
+	try:
+		os.mkdir(settingsDirName)
+	except FileExistsError:
+		pass
+	copyfile(os.path.join(here, settingsFileName), settingsDirName)
+
+class PostInstallCommand(install):
+	"""Post-installation for installation mode."""
+	def run(self):
+		put_settings()
+		install.run(self)
+
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 	long_description = f.read()
 
 # https://packaging.python.org/guides/single-sourcing-package-version/#single-sourcing-the-version
 version = {}
-with open(path.join(name, "version.py")) as fp:
+with open(os.path.join(name, "version.py")) as fp:
 	exec(fp.read(), version)
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
@@ -219,7 +237,10 @@ setup(
 		'console_scripts': [
 			'exp1572=exp1572.game:mainMenu',
 		],
-	 },
+	},
+	cmdclass={
+		'install': PostInstallCommand
+	},
 
 	# List additional URLs that are relevant to your project as a dict.
 	#
