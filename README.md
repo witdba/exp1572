@@ -1,8 +1,18 @@
 # exp1572
-Game "1572: The Lost Expedition" (designed by Mike Heim).
+Game "1572: The Lost Expedition" (designed by [Mike Heim](https://boardgamegeek.com/boardgamedesigner/87601/mike-heim)).
 
-Console game manager written in python. See full description at: https://boardgamegeek.com/boardgame/199269/1572-lost-expedition
+Console game manager written in python. See full description at [BoardGameGeek](https://boardgamegeek.com/boardgame/199269/1572-lost-expedition).
 
-Make file exp1572.py executeable and run it for starting the game. All you need for playing: one page with a map (located in the rules/ folder). This program emulate dice rolling and drives a player thru gameplay enforcing rules and context circumstances.
+## Installation
 
-Available localizations: ru, en
+```bash
+pip install exp1572
+```
+
+## Run
+
+```bash
+exp1572
+```
+
+Available localizations: ru, en (work continues)

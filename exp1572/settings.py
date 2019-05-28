@@ -1,9 +1,24 @@
 import json
 import os
+from shutil import copyfile
 
-here = os.path.join(os.path.expanduser('~'), '.exp1572')
-with open(os.path.join(here, 'settings.json')) as sfile:
-	VALUES = json.load(sfile)
+name = 'exp1572'
+here = os.path.abspath(os.path.dirname(__file__))
+settingsDstName = os.path.join(os.path.expanduser('~'), '.' + name)
+settingsFileName = 'settings.json'
+
+try:
+	sfile = open(os.path.join(settingsDstName, settingsFileName))
+except:
+	try:
+		os.mkdir(settingsDstName)
+	except FileExistsError:
+		pass
+	copyfile(os.path.join(os.path.abspath(os.path.dirname(__file__)), 
+		settingsFileName), os.path.join(settingsDstName, settingsFileName))
+	sfile = open(os.path.join(settingsDstName, settingsFileName))
+
+VALUES = json.load(sfile)
 
 try:
 	DESCRIPTIONS = {

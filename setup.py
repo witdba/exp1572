@@ -7,8 +7,6 @@ https://github.com/pypa/sampleproject
 import glob
 import pathlib
 import subprocess
-from shutil import copyfile
-
 
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
@@ -22,9 +20,6 @@ import os
 # from io import open
 
 here = os.path.abspath(os.path.dirname(__file__))
-settingsDirName = os.path.join(os.path.expanduser('~'), '.' + name)
-settingsFileName = 'settings.json'
-
 name = 'exp1572'
 description = 'Console game manager for the "1572: The Lost Expedition" solitaire game'
 
@@ -44,19 +39,6 @@ def create_mo_files():
 		mo_files.append(str(mo.relative_to(prefix)))
 
 	return mo_files
-
-def put_settings():
-	try:
-		os.mkdir(settingsDirName)
-	except FileExistsError:
-		pass
-	copyfile(os.path.join(here, settingsFileName), settingsDirName)
-
-class PostInstallCommand(install):
-	"""Post-installation for installation mode."""
-	def run(self):
-		put_settings()
-		install.run(self)
 
 # Get the long description from the README file
 with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
@@ -215,7 +197,7 @@ setup(
 	# MANIFEST.in as well.
 	include_package_data = True,
 	package_data={  # Optional
-		name: ['settings.json', ] + create_mo_files(),
+		name: ['settings.json', ],
 	},
 
 	# Although 'package_data' is the preferred approach, in some case you may
@@ -223,7 +205,7 @@ setup(
 	# http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
 	#
 	# In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-	# data_files=[(name, ['settings.json'])],  # Optional
+	data_files=[(name, create_mo_files())],  # Optional
 
 	# To provide executable scripts, use entry points in preference to the
 	# "scripts" keyword. Entry points provide cross-platform support and allow
@@ -238,9 +220,9 @@ setup(
 			'exp1572=exp1572.game:mainMenu',
 		],
 	},
-	cmdclass={
-		'install': PostInstallCommand
-	},
+	# cmdclass={
+	#	'install': PostInstallCommand
+	# },
 
 	# List additional URLs that are relevant to your project as a dict.
 	#
