@@ -20,6 +20,27 @@ from importlib import reload
 
 APP_NAME = 'exp1572'
 
+# Game constants
+EMPIRE_RADIUS = 2
+ECLIPSE_BONUS_COUNT = 2
+LOCATIONS_NUM = 44
+MAP_WIDTH = 3
+DESTINATION = 44
+LAST_DAY = 42
+EXP_CART = 1
+EXP_BOT = 2
+EXP_MIL = 3
+EXP_DOCTOR = 6
+FEVER_WILDS = 3
+FEVER_WILDS_DOCTOR = 2
+
+EXP_MIL_BONUS = 2 # re-roll dice for ammo
+MOD_TERRAIN_WALK = -1
+
+MIN = {"con": 1, "ammo": 1, "food": 1, "morale": 1, "move": 1}
+MAX = {"con": 6, "ammo": 6, "food": 6, "morale": 6, "move": 6}
+START = {"con": 6, "ammo": 6, "food": 6, "morale": 6, "move": 6, "fever": False}
+
 here = path.abspath(path.dirname(__file__))
 LOCALES_DIR = path.join(here, 'locales', '')
 
@@ -157,12 +178,18 @@ class Location:
 
 class Map:
 	locations = {}
-	lake = {"name": _("map.lake.name"), "found": False} # "Озеро Лагос Де Оро"
-	camp = {"name": _("map.camp.name"), "found": False} # "Сожжённый лагерь европейских миссионеров"
-	herd = {"name": _("map.herd.name"), "found": False} # "Мигрирующие стада животных"
-	eclipse = {"name": _("map.eclipse.name"), "found": False} # "Предсказание солнечного затмения"
-	princess = {"name": _("map.princess.name"), "found": False} # "Принцесса Канти"
-	diego = {"name": _("map.diego.name"), "found": False} # "Диего Мендоса"
+	# "Озеро Лагос Де Оро"
+	lake = {"name": _("map.lake.name"), "found": False, "dices": [2, 3]}
+	# "Сожжённый лагерь европейских миссионеров"
+	camp = {"name": _("map.camp.name"), "found": False, "dices": [4]}
+	# "Мигрирующие стада животных"
+	herd = {"name": _("map.herd.name"), "found": False, "dices": [5]}
+	# "Предсказание солнечного затмения"
+	eclipse = {"name": _("map.eclipse.name"), "found": False, "dices": [9]}
+	# "Принцесса Канти"
+	princess = {"name": _("map.princess.name"), "found": False, "dices": [10]}
+	# "Диего Мендоса"
+	diego = {"name": _("map.diego.name"), "found": False, "dices": [11, 12]}
 	wonders = [lake, camp, herd, eclipse, princess, diego]
 	wonder = {"name": _("map.wonder.name"), "count": 0} # "Чудо природы"
 	cartesianLocations = {}
@@ -173,7 +200,7 @@ class Map:
 	trails = []
 
 	def __init__(self):
-		for i in range(0, 45):
+		for i in range(0, LOCATIONS_NUM + 1):
 			self.locations[i] = Location(i)
 		self.locations[0].land = _("lands.mountains") # "Горы"
 		self.locations[1].land = _("lands.mountains") # "Горы"
@@ -189,20 +216,20 @@ class Map:
 		return res
 
 	def markRiver(self):
-		for i in range(1, 41, 3):
+		for i in range(1, 41, self.mapWidth):
 			self.locations[i].river = True
 		self.locations[41].river = True
 		self.locations[44].river = True
 
 	def markCoordinates(self):
-		for i in range(0, 45):
-			self.cartesianLocations[(i // 3, i % 3)] = self.locations[i]
-			self.locations[i].cartesianCoordinates = (i // 3, i % 3)
+		for i in range(0, LOCATIONS_NUM + 1):
+			self.cartesianLocations[(i // self.mapWidth, i % self.mapWidth)] = self.locations[i]
+			self.locations[i].cartesianCoordinates = (i // self.mapWidth, i % self.mapWidth)
 		for i in [21, 22, 23, 33, 34, 35, 39, 40, 41, 42, 43, 44]:
 			del(self.cartesianLocations[(i // 3, i % 3)])
 		for i in [21, 22, 23, 33, 34, 35, 39, 40, 41, 42, 43, 44]:
 			self.cartesianLocations[(i // 3, i % 3 + 1)] = self.locations[i]
-			self.locations[i].cartesianCoordinates = (i // 3, i % 3 + 1)
+			self.locations[i].cartesianCoordinates = (i // self.mapWidth, i % self.mapWidth + 1)
 		# Cube Coordinates
 		mapCurve = ['0', 'NE', 'SE', 'NE', 'SE', 'NE', 'SE',
 		'SE', 'NE', 'NE', 'SE', 'SE', 'NE', 'SE', 'SE']
@@ -313,18 +340,35 @@ class Map:
 
 	def foundWonder(self, loc):
 		debug('foundWonder enter')
+		# Define type of Interest
 		d = sum(dice.roll())
 		debug(f'points: {d}')
-		if d < 4 and (loc.num // 3) <= (14 - 3):
+		if d in self.lake["dices"]:
+			# Lagos de Oro
+			# It should be placed in a half of the rest of river
+			# so the distance from current location to the end point
+			# must be divideable. This means that 14 (x for destination)
+			# minus 1 (to preserve lake geography falls into the ocean)
+			# minus current x minus 1 (to preserve current location suddenly
+			# transforms to the lake) divided by 2 must be >= 1.
+			# So: (destX - 1 - currX - 1) // 2 >= 1
+			# Or: currX <= destX - 4
+			currX = loc.num // self.mapWidth
+			destX = LOCATIONS_NUM // self.mapWidth
 			if not self.lake["found"]:
-				debug('lake not found')
-				self.lake["found"] = True
-				res = self.lake
+				if currX <= destX - 4:
+					debug('lake not found yet')
+					self.lake["found"] = True
+					res = self.lake
+				else:
+					debug('lake do not fit on the river')
+					self.wonder["count"] += 1
+					res = self.wonder
 			else:
 				debug('lake found already')
 				self.wonder["count"] += 1
 				res = self.wonder
-		elif d == 4:
+		elif d in self.camp["dices"]:
 			if not self.camp["found"]:
 				debug('camp not found')
 				self.camp["found"] = True
@@ -333,7 +377,7 @@ class Map:
 				debug('camp found already')
 				self.wonder["count"] += 1
 				res = self.wonder
-		elif d == 5:
+		elif d in self.herd["dices"]:
 			if not self.herd["found"]:
 				debug('herd found')
 				self.herd["found"] = True
@@ -342,11 +386,7 @@ class Map:
 				debug('herd found already')
 				self.wonder["count"] += 1
 				res = self.wonder
-		elif d < 9:
-			self.wonder["count"] += 1
-			debug(f'wonder count incremented: {self.wonder["count"]}')
-			res = self.wonder
-		elif d == 10:
+		elif d in self.princess["dices"]:
 			if not self.princess["found"]:
 				debug('princess not found')
 				self.princess["found"] = True
@@ -355,7 +395,7 @@ class Map:
 				debug('princess already found')
 				self.wonder["count"] += 1
 				res = self.wonder
-		else:
+		elif d in self.diego["dices"]:
 			if not self.diego["found"]:
 				debug('diego not found')
 				self.diego["found"] = True
@@ -364,6 +404,10 @@ class Map:
 				debug('diego found already')
 				self.wonder["count"] += 1
 				res = self.wonder
+		else:
+			self.wonder["count"] += 1
+			debug(f'wonder count incremented: {self.wonder["count"]}')
+			res = self.wonder
 		debug(f'addSight call for {self.locations[loc.num]} ({loc.num}) with "{res["name"]}" argument')
 		self.locations[loc.num].addSight(res["name"])
 		debug('foundWonder completed')
@@ -384,17 +428,20 @@ class Map:
 		if loc.land == None:
 			loc.land = land
 		else:
-			raise Exception(_("exception.locationAlreadyMapped").format(loc = loc)) # 'Участок {loc} уже нанесён на карту!'
+			# 'Участок {loc} уже нанесён на карту!'
+			raise Exception(_("exception.locationAlreadyMapped").format(loc = loc))
 
 	def foundEmpire(self, loc):
 		if not loc in self.empireLocations:
-			print(_("message.foundEmpire")) # 'Вы оказались в самом центре империи враждебных туземцев!'
+			# 'Вы оказались в самом центре империи враждебных туземцев!'
+			print(_("message.foundEmpire"))
 		else:
-			print(_("message.foundEmpireInsideEmpire")) # 'Империя враждебных туземцев расширила свои границы'
-		self.empireLocations += self.nNeighbors(loc, 2)
+			# 'Империя враждебных туземцев расширила свои границы'
+			print(_("message.foundEmpireInsideEmpire"))
+		self.empireLocations += self.nNeighbors(loc, EMPIRE_RADIUS)
 		self.empireLocations = list(set(self.empireLocations))
-
-		print(_("message.empireLocations")) # 'Территория империи:'
+		# 'Территория империи:'
+		print(_("message.empireLocations"))
 		for l in self.empireLocations:
 			print(l)
 
@@ -429,33 +476,37 @@ class Expedition:
 		if expeditionType:
 			self.expeditionType = expeditionType
 		else:
+			# Random expedition type
 			self.expeditionType = sum(dice.roll(1))
-		if self.expeditionType == 6:
-			self.FEVERREQ = 2
-		else:
-			self.FEVERREQ = 3
+		self.FEVERREQ = FEVER_WILDS
+		if self.expeditionType == EXP_DOCTOR:
+			self.FEVERREQ = FEVER_WILDS_DOCTOR
 		self.map = Map()
-		if self.expeditionType == 1:
+		if self.expeditionType == EXP_CART:
 			self.markTrails()
 		self.currentLocation = self.map.locations[0]
 
-		self.con = 6
-		self.ammo = 6
-		self.food = 6
-		self.morale = 6
-		self.move = 6
-		self.fever = False
+		self.con = START["con"]
+		self.ammo = START["ammo"]
+		self.food = START["food"]
+		self.morale = START["morale"]
+		self.move = START["move"]
+		self.fever = START["fever"]
 		self.eclipse_count = 0
 
 	def __str__(self):
 		# '{type} экспедиция: {description}'
-		res = _("expedition.str.expeditionTypeName").format(type = common.EXPEDITIONTYPES[self.expeditionType][0])
+		res = _("expedition.str.expeditionTypeName").format(type = \
+			common.EXPEDITIONTYPES[self.expeditionType][0])
+		# Description of expedition type
 		if settings.VALUES["display.expeditionTypeDescription"] or self.day == 1:
-			res += _("expedition.str.expeditionTypeDescription").format(description = common.EXPEDITIONTYPES[self.expeditionType][1])
+			res += _("expedition.str.expeditionTypeDescription").format(\
+				description = common.EXPEDITIONTYPES[self.expeditionType][1])
 		else:
 			res += '.'
+		# 'День {day} {progressbar}'
 		res += "\n" + _("expedition.str.day").format(day = self.day,
-			progressbar = utils.progressBar(42, self.day)) + "\n" # 'День {day} {progressbar}'
+			progressbar = utils.progressBar(LAST_DAY, self.day)) + "\n"
 		# 'Текущий участок: {loc}'
 		if self.currentLocation in self.map.lakeLocations:
 			res += _("expedition.str.location").format(loc = self.map.lake["name"])
@@ -463,148 +514,193 @@ class Expedition:
 			res += _("expedition.str.location").format(loc = self.currentLocation)
 		res += "\n"
 		if self.fever:
-			res += _("expedition.str.feverTrue") + "\n" # 'Лихорадка: [\u2623]'
+			res += _("expedition.str.feverTrue") + "\n"
 		else:
-			res += _("expedition.str.feverFalse") + "\n" # 'Лихорадка: [ ]'
+			res += _("expedition.str.feverFalse") + "\n"
 		# 'Конкистадоры   : {progressbar}'
 		res += _("expedition.str.con").format(progressbar = \
-			utils.progressBar(6, self.con)) + "\n"
+			utils.progressBar(MAX["con"], self.con)) + "\n"
 		# 'Снаряжение     : {progressbar}'
 		res += _("expedition.str.ammo").format(progressbar = \
-			utils.progressBar(6, self.ammo)) + "\n"
+			utils.progressBar(MAX["ammo"], self.ammo)) + "\n"
 		# 'Еда            : {progressbar}'
 		res += _("expedition.str.food").format(progressbar = \
-			utils.progressBar(6, self.food)) + "\n"
+			utils.progressBar(MAX["food"], self.food)) + "\n"
 		# 'Боевой дух     : {progressbar}'
 		res += _("expedition.str.morale").format(progressbar = \
-			utils.progressBar(6, self.morale)) + "\n"
+			utils.progressBar(MAX["morale"], self.morale)) + "\n"
 		# 'Пункты движения: {progressbar}'
 		res += _("expedition.str.move").format(progressbar = \
-			utils.progressBar(6, self.move)) + "\n"
+			utils.progressBar(MAX["move"], self.move)) + "\n"
 		res += '\n'
-		res += _("expedition.str.neighbors") + "\n" # 'Соседние участки:'
+		# 'Соседние участки:'
+		res += _("expedition.str.neighbors") + "\n"
 		n = self.map.neighbors(self.map.locInLake(self.currentLocation))
 		for k, l in n.items():
+			# All except current
 			if k != "0":
 				res += f'{common.DIRS_EXTENSION[k][3].rjust(2)} {common.DIRS_EXTENSION[k][2]} {l}' + '\n'
 		return(res)
 
 	def markTrails(self):
+		# Initialize Location.trail for future use
 		for k in self.map.locations:
 			self.map.locations[k].trail = False
 		debug('markTrail completed')
 
 	def barMove(self, reqMP):
+		# Display current and required movement points
 		return('[-' + ((self.move - 1) * '+' + max(0, (reqMP - self.move + 1)) * '-').ljust(5) + ']')
 
 	def decCon(self):
+		# Decrement Conquistadors by 1
 		self.con -= 1
-		if self.con < 1:
-			raise Exception(_("message.endGame.noCon")) # Вы потеряли последнего конкистадора. Игра окончена :(
-		print(_("message.decCon").format(con = self.con)) # "Потерян конкистадор. Осталось {con}"
+		if self.con < MIN["con"]:
+			# Вы потеряли последнего конкистадора. Игра окончена :(
+			raise Exception(_("message.endGame.noCon"))
+		# "Потерян конкистадор. Осталось {con}"
+		print(_("message.decCon").format(con = self.con))
 
 	def incCon(self):
-		if self.con < 6:
+		# Increase Conquistadors by 1
+		if self.con < MAX["con"]:
 			self.con += 1
-			print(_("message.incCon").format(con = self.con)) # "У Вас новый конкистадор. Теперь нас {con}"
+			# "У Вас новый конкистадор. Теперь нас {con}"
+			print(_("message.incCon").format(con = self.con))
 		else:
-			print(_("message.incConMax")) # "Достигнут максимальный размер отряда"
+			# "Достигнут максимальный размер отряда"
+			print(_("message.incConMax"))
 
 	def decAmmo(self):
-		if self.ammo > 1:
+		# Decrement muskets by 1
+		if self.ammo > MIN["ammo"]:
 			self.ammo -= 1
-			print(_("message.decAmmo").format(ammo = self.ammo)) # 'Снаряжение и боеприпасы пропали. Кое-что осталось: {ammo}'
+			# 'Снаряжение и боеприпасы пропали. Кое-что осталось: {ammo}'
+			print(_("message.decAmmo").format(ammo = self.ammo))
 		else:
-			raise Exception(_("message.decAmmoMin")) # 'Достигнут минимум по снаряжению'
+			# 'Достигнут минимум по снаряжению'
+			raise Exception(_("message.decAmmoMin"))
 
 	def incAmmo(self, amount = 1):
-		if self.ammo + amount <= 6:
+		# Increment muskets by amount
+		if self.ammo + amount <= MAX["ammo"]:
 			self.ammo += amount
 			print(_("message.incAmmo").format(ammo = self.ammo)) # 'Снаряжение и боеприпасы пополнены: {ammo}'
 		else:
-			self.ammo = 6
+			self.ammo = MAX["ammo"]
 			print(_("message.incAmmoMax")) # 'Достигнут максимум по снаряжению'
 
 	def decFood(self):
-		if self.food > 1:
+		# Decrement food by 1
+		if self.food > MIN["food"]:
 			self.food -= 1
-			print(_("message.decFood").format(food = self.food)) # 'Запасы пищи уменьшились. Остаток: {food}'
+			# 'Запасы пищи уменьшились. Остаток: {food}'
+			print(_("message.decFood").format(food = self.food))
 		else:
-			print(_("message.decFoodMin")) # 'Нехватка пищи'
+			# 'Нехватка пищи'
+			print(_("message.decFoodMin"))
 			self.decCon()
 
 	def incFood(self, amount = 1):
-		if self.food + amount <= 6:
+		# Increment food by amount
+		if self.food + amount <= MAX["food"]:
 			self.food += amount
-			print(_("message.incFood").format(food = self.food)) # 'Пополнены запасы пищи: {food}'
+			# 'Пополнены запасы пищи: {food}'
+			print(_("message.incFood").format(food = self.food))
 		else:
-			self.food = 6
-			print(_("message.incFoodMax")) # 'Достигнут максимум запасов пищи'
+			self.food = MAX["food"]
+			# 'Достигнут максимум запасов пищи'
+			print(_("message.incFoodMax"))
 
-	def decmorale(self):
-		if self.morale > 1:
+	def decMorale(self):
+		# Decrement morale by 1
+		if self.morale > MIN["morale"]:
 			self.morale -= 1
-			print(_("message.decmorale").format(morale = self.morale)) # 'Боевой дух упал: {morale}'
+			# 'Боевой дух упал: {morale}'
+			print(_("message.decMorale").format(morale = self.morale))
 		else:
-			print(_("message.decmoraleMin")) # 'Дезертирство'
+			# 'Дезертирство'
+			print(_("message.decMoraleMin"))
 			self.decCon()
 
-	def incmorale(self, amount = 1):
-		if self.morale + amount <= 6:
+	def incMorale(self, amount = 1):
+		# Increase morale by amount
+		if self.morale + amount <= MAX["morale"]:
 			self.morale += amount
-			print(_("message.incmorale").format(morale = self.morale)) # 'Боевой дух повышен: {morale}'
+			# 'Боевой дух повышен: {morale}'
+			print(_("message.incMorale").format(morale = self.morale))
 		else:
 			self.morale = 6
-			print(_("message.incmoraleMax")) # 'Достигнут максимум боевого духа'
+			# 'Достигнут максимум боевого духа'
+			print(_("message.incMoraleMax"))
 
 	def decMove(self, points = 1):
-		if self.move - points >= 1:
+		# decrement movement points by amount
+		if self.move - points >= MIN["move"]:
 			self.move -= points
-			print(_("message.decMove").format(move = self.move)) # 'Пункты движения уменьшились: {move}'
+			# 'Пункты движения уменьшились: {move}'
+			print(_("message.decMove").format(move = self.move))
 		else:
-			print(_("message.decMoveMin")) # 'Пунктов движения не может быть меньше 1'
+			# 'Пунктов движения не может быть меньше 1'
+			print(_("message.decMoveMin"))
 
 	def incMove(self, amount = 1):
-		if self.move + amount <= 6:
+		if self.move + amount <= MAX["move"]:
 			self.move += amount
-			print(_("message.incMove").format(move = self.move)) # 'Увеличены пункты движения: {move}'
+			# 'Увеличены пункты движения: {move}'
+			print(_("message.incMove").format(move = self.move))
 		else:
-			self.move = 6
-			print(_("message.incMoveMax")) # 'Достигнут максимум пунктов движения'
+			self.move = MAX["move"]
+			# 'Достигнут максимум пунктов движения'
+			print(_("message.incMoveMax"))
 
 	def feverSet(self):
-		if self.expeditionType == 2:
-			print(_("message.feverSetUnableExpType")) # 'Лихорадки удалось избежать!'
+		# Set fever for the Expedition
+		if self.expeditionType == EXP_BOT:
+			# 'Лихорадки удалось избежать!'
+			print(_("message.feverSetUnableExpType"))
 		else:
 			if not self.fever:
 				self.fever = True
-				print(_("message.feverSet")) # 'Началась ЛИХОРАДКА!'
+				# 'Началась ЛИХОРАДКА!'
+				print(_("message.feverSet"))
 			else:
-				print(_("message.feverSetAlready")) # 'Ещё один конкистадор приболел...'
+				# 'Ещё один конкистадор приболел...'
+				print(_("message.feverSetAlready"))
 
 	def feverUnset(self):
+		# Cure the fever
 		self.fever = False
-		print(_("message.deverUnset")) # 'Лихорадка закончилась!!!'
+		# 'Лихорадка закончилась!!!'
+		print(_("message.deverUnset"))
 
 	def eclipseSet():
-		self.eclipse_count = 2
-		print(_("message.eclipseSet")) # 'В следующие два контакта с туземцами выбираете результат!'
+		# Set bonus count for eclipse prediction
+		self.eclipse_count = ECLIPSE_BONUS_COUNT
+		# 'В следующие два контакта с туземцами выбираете результат!'
+		print(_("message.eclipseSet"))
 
 	def foundSettlement(self, friendly = False):
+		# Do the settlement consiquences
 		self.currentLocation.settlements += 1
 		if friendly:
 			self.currentLocation.friendlySettlements += 1
-			print(_("message.foundFriendlySettlement")) # 'Обнаружено дружественное поселение!'
+			# 'Обнаружено дружественное поселение!'
+			print(_("message.foundFriendlySettlement"))
 		else:
-			print(_("message.foundSettlement")) # 'Обнаружено поселение!'
+			# 'Обнаружено поселение!'
+			print(_("message.foundSettlement"))
 		if not (settings.VALUES["play.friendlyDisableMoveLoss"] and 
 			self.currentLocation.friendlySettlements > 0):
 			self.decMove()
 
 	def foundTrail(self):
+		# Trail is found. Map their tail
 		menuItems = {}
-		menuHeader = _("menuHeader.foundTrail") # 'Найдена ТРОПА!!!'
-		inputPrompt = _("menuPrompt.foundTrail") # 'Выберите участок, в котором она заканчивается'
+		# 'Найдена ТРОПА!!!'
+		menuHeader = _("menuHeader.foundTrail")
+		# 'Выберите участок, в котором она заканчивается'
+		inputPrompt = _("menuPrompt.foundTrail")
 		self.currentLocation.trail = True
 		n = self.map.neighborsToTrail(self.currentLocation)
 		i = 1
@@ -616,33 +712,38 @@ class Expedition:
 		self.map.addTrail(self.currentLocation, n[m])
 
 	def foundBox(self):
-		print(_("message.foundBox")) # 'Найден ящик с припасами!'
+		# 'Найден ящик с припасами!'
+		print(_("message.foundBox"))
 		self.incFood()
 		self.incAmmo()
-		self.incmorale()
+		self.incMorale()
 
 	def rediceForAmmo(self, originalDices, dicesToRedice):
+		# Re-roll dices for a musket
 		debug(f'rediceForAmmo enter: {originalDices}, {dicesToRedice}')
-		if self.ammo == 1:
-			raise Exception(_("exception.rediceNoAmmo")) # 'Переброс за снаряжение невозможен'
+		if self.ammo == MIN["ammo"]:
+			# 'Переброс за снаряжение невозможен'
+			raise Exception(_("exception.rediceNoAmmo"))
 		self.decAmmo()
 		debug('call dice.reRoll()')
 		res = dice.reRoll(originalDices, dicesToRedice)
 		debug(f'dice.reRoll() returns: {res}')
-		if self.expeditionType == 3:
-			res += [2]
+		if self.expeditionType == EXP_MIL:
+			res += [EXP_MIL_BONUS]
 			# 'Тип экспедиции "{type}" повысил результат: {res}'
-			print(_("message.rediceExpType").format(type = common.EXPEDITIONTYPES[self.expeditionType][0]),
+			print(_("message.rediceExpType").format(type = \
+				common.EXPEDITIONTYPES[self.expeditionType][0]),
 				res = res)
 		return(res)
 
 	def do02Walk(self, dicesWalk, jockers):
+		# Phase 2 processing
 		debug(f'dicesWalk: {dicesWalk}, jockers: {jockers}')
 		points = sum(dicesWalk) + jockers
-		if self.currentLocation.land in [
 		# 'Трясины', 'Холмы', 'Горы', 'Джунгли'
-		_("lands.swamp"), _("lands.hills"), _("lands.mountains"), _("lands.jungle")
-		]:
+		if self.currentLocation.land in [
+		_("lands.swamp"), _("lands.hills"),
+		_("lands.mountains"), _("lands.jungle")]:
 			points -= 1
 			# '{land} снизили результат {dicesWalk}: {points}'
 			print(_("message.doWalk.landDec").format(land = self.currentLocation.land,
@@ -665,7 +766,7 @@ class Expedition:
 			self.feverSet()
 		elif points < 9:
 			self.incMove()
-			self.decmorale()
+			self.decMorale()
 		elif points == 9:
 			self.incMove()
 		elif points == 10:
@@ -721,7 +822,7 @@ class Expedition:
 			else:
 				self.foundSettlement(False)
 		elif points == 8:
-			self.incmorale()
+			self.incMorale()
 		elif points == 9:
 			self.foundTrail()
 		else:
@@ -730,10 +831,8 @@ class Expedition:
 			debug(f'foundWonder returns {wonder}')
 			debug(f'currentLocation: {self.currentLocation}')
 			print(wonder["name"])
-			debug(self.map.locations[44])
 			debug('call do07Wonder()')
 			self.do07Wonder(wonder)
-			debug(self.map.locations[44])
 
 	def do05Contact(self, dicesContact, jockers):
 		debug(f'do05Contact enter: dicesContact: {dicesContact}, jockers: {jockers}')
@@ -793,9 +892,9 @@ class Expedition:
 			else:
 				self.decCon()
 		elif points == 4:
-			self.decmorale()
+			self.decMorale()
 		elif points == 5:
-			self.decmorale()
+			self.decMorale()
 			self.incFood()
 		elif points < 9:
 			self.incFood()
@@ -803,7 +902,7 @@ class Expedition:
 			self.incFood(2)
 		else:
 			self.incFood(2)
-			self.incmorale()
+			self.incMorale()
 
 	def do07Wonder(self, wonder):
 		debug('do07Wonder enter')
@@ -817,7 +916,7 @@ class Expedition:
 			debug('call manyFood()')
 		elif wonder == self.map.wonder:
 			debug('wonder')
-			self.incmorale(5)
+			self.incMorale(5)
 		elif wonder == self.map.eclipse:
 			debug('eclipse')
 			self.eclipseSet()
@@ -938,7 +1037,7 @@ class Expedition:
 			print(_("message.doMove.moveDone").format(loc = nextLocation))
 			self.decMove(reqMP)
 			movemorale = int(common.DIRS_EXTENSION[m][1])
-			self.incmorale(movemorale)
+			self.incMorale(movemorale)
 			if self.currentLocation.num == 18:
 				self.map.foundWonder(self.currentLocation)	
 
@@ -1166,7 +1265,7 @@ class Expedition:
 			print()
 			print(self)
 			c1 = self.currentLocation.cubeCoordinates
-			c2 = self.map.locations[44].cubeCoordinates
+			c2 = self.map.locations[DESTINATION].cubeCoordinates
 			# 'Расстояние до цели: {distance}'
 			print(_("message.playDay.distance").format(distance = utils.cubeDistance(c1, c2)))
 			if tw:
@@ -1188,10 +1287,10 @@ class Expedition:
 			if self.expeditionType == 1 and self.move >= 3 \
 			and not self.currentLocation.trail:
 				self.foundTrail()
-			if self.day > 42 or self.currentLocation.num == 44:
+			if self.day > LAST_DAY or self.currentLocation.num == DESTINATION:
 				break
 		score = self.map.countMappedLocations()
-		if self.currentLocation.num == 44:
+		if self.currentLocation.num == DESTINATION:
 			print(_("message.gameover.win"))
 			score += self.con
 		else:
