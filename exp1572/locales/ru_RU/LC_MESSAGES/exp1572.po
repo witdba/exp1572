@@ -78,6 +78,10 @@ msgstr "Горы"
 msgid "exception.locationAlreadyMapped"
 msgstr "Участок {loc} уже нанесён на карту!"
 
+# wit
+msgid "exception.settings.jsonLoad"
+msgstr "Ошибка чтения настроек. Перезагрузите программу"
+
 #: exp1572.py:375
 msgid "message.foundEmpire"
 msgstr "Вы оказались в самом центре империи враждебных туземцев!"
@@ -592,23 +596,23 @@ msgid "menu.locale.prompt"
 msgstr "Выберите язык: "
 
 #: settings.py:8
-msgid "settings.fdmd.description"
+msgid "settings.play.friendlyDisableMoveLoss.desc"
 msgstr ""
 "Дружественное поселение туземцев на участке предотвращает потерю пунктов "
 "движения из-за обнаружения поселения туземцев"
 
 #: settings.py:9
-msgid "settings.wfcl.description"
+msgid "settings.play.waterfallInCurrentLocation.desc"
 msgstr ""
 "Если при броске кубиков в фазе Картографирования на участке с рекой выпадает "
 "1, водопад обнаруживается на текущем участке (True) или на соседнем (False)"
 
 #: settings.py:10
-msgid "settings.det.description"
+msgid "settings.display.expeditionTypeDescription.desc"
 msgstr "Показывать описание типа экспедиции каждый день"
 
 #: settings.py:11
-msgid "settings.locale.description"
+msgid "settings.display.locale.desc"
 msgstr "Язык интерфейса"
 
 #: dres.py:4 common.py:60

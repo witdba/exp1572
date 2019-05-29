@@ -19,8 +19,6 @@ from importlib import reload
 # import glob
 
 APP_NAME = 'exp1572'
-settingsDirName = path.join(path.expanduser('~'), '.' + APP_NAME)
-settingsFileName = 'settings.json'
 
 here = path.abspath(path.dirname(__file__))
 LOCALES_DIR = path.join(here, 'locales', '')
@@ -89,8 +87,7 @@ def useLocale(locale):
 
 def setOption(optionName, optionValue):
 	settings.VALUES[optionName] = optionValue
-	with open(path.join(settingsDirName, settingsFileName), 'w') as sfile:
-		json.dump(settings.VALUES, sfile)
+	settings.save()
 
 def debug(msg):
 	if MSG_LEVEL == 'DEBUG':

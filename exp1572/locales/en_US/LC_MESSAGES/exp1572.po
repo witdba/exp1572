@@ -78,6 +78,10 @@ msgstr "Mountains"
 msgid "exception.locationAlreadyMapped"
 msgstr "Location {loc} already mapped!"
 
+# wit
+msgid "exception.settings.jsonLoad"
+msgstr "Unable to read user settings. Default will be in use after restart"
+
 #: exp1572.py:375
 msgid "message.foundEmpire"
 msgstr "You are in the center of the empire of hostile natives!"
@@ -592,23 +596,23 @@ msgid "menu.locale.prompt"
 msgstr "Choose language"
 
 #: settings.py:8
-msgid "settings.fdmd.description"
+msgid "settings.play.friendlyDisableMoveLoss.desc"
 msgstr ""
 "Friendly settlement on your location prevents move point loss caused by new "
 "settlement finding"
 
 #: settings.py:9
-msgid "settings.wfcl.description"
+msgid "settings.play.waterfallInCurrentLocation.desc"
 msgstr ""
 "Cataract appears on your (True) or neighbor (False) location in case you "
 "roll dice 1 in Cartography phase"
 
 #: settings.py:10
-msgid "settings.det.description"
+msgid "settings.display.expeditionTypeDescription.desc"
 msgstr "Show the expedition type description every day"
 
 #: settings.py:11
-msgid "settings.locale.description"
+msgid "settings.display.locale.desc"
 msgstr "Interface language"
 
 #: dres.py:4 common.py:60
