@@ -16,7 +16,6 @@ name = 'exp1572'
 description = 'Console game manager for the "1572: The Lost Expedition" solitaire game'
 project_urls = {
 	'Bug Reports': 'https://github.com/witdba/ ' + name + '/issues',
-	# TODO 'Funding': 'https://donate.pypi.org',
 	'Say Thanks!': 'http://saythanks.io/to/witdba',
 	'Source': 'https://github.com/witdba/' + name,
 }
