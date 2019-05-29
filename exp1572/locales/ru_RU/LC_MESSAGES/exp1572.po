@@ -211,11 +211,11 @@ msgid "message.decmoraleMin"
 msgstr "Дезертирство"
 
 #: exp1572.py:539
-msgid "message.incmorale"
+msgid "message.incMorale"
 msgstr "Боевой дух повышен: {morale}"
 
 #: exp1572.py:542
-msgid "message.incmoraleMax"
+msgid "message.incMoraleMax"
 msgstr "Достигнут максимум боевого духа"
 
 #: exp1572.py:547

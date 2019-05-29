@@ -211,11 +211,11 @@ msgid "message.decmoraleMin"
 msgstr "Desertion"
 
 #: exp1572.py:539
-msgid "message.incmorale"
+msgid "message.incMorale"
 msgstr "The morale is increased: {morale}"
 
 #: exp1572.py:542
-msgid "message.incmoraleMax"
+msgid "message.incMoraleMax"
 msgstr "The maximum for morale is reached"
 
 #: exp1572.py:547

@@ -21,25 +21,36 @@ from importlib import reload
 APP_NAME = 'exp1572'
 
 # Game constants
+DICE_COUNT_PLAN = 5
+DICE_COUNT_INC_CON = 4
+WILD = 1
 EMPIRE_RADIUS = 2
 ECLIPSE_BONUS_COUNT = 2
 LOCATIONS_NUM = 44
+LOC_WONDER = 18
 MAP_WIDTH = 3
 DESTINATION = 44
 LAST_DAY = 42
 EXP_CART = 1
 EXP_BOT = 2
 EXP_MIL = 3
+EXP_ARCH = 4
+EXP_REL = 5
 EXP_DOCTOR = 6
 FEVER_WILDS = 3
 FEVER_WILDS_DOCTOR = 2
 
 EXP_MIL_BONUS = 2 # re-roll dice for ammo
-MOD_TERRAIN_WALK = -1
+EXP_CART_MP = 3
 
 MIN = {"con": 1, "ammo": 1, "food": 1, "morale": 1, "move": 1}
 MAX = {"con": 6, "ammo": 6, "food": 6, "morale": 6, "move": 6}
 START = {"con": 6, "ammo": 6, "food": 6, "morale": 6, "move": 6, "fever": False}
+
+MP_NORMAL = 5
+MP_RIVER = 4
+MP_TRAIL = 3
+MP_STAY = 0
 
 here = path.abspath(path.dirname(__file__))
 LOCALES_DIR = path.join(here, 'locales', '')
@@ -216,20 +227,20 @@ class Map:
 		return res
 
 	def markRiver(self):
-		for i in range(1, 41, self.mapWidth):
+		for i in range(1, 41, MAP_WIDTH):
 			self.locations[i].river = True
 		self.locations[41].river = True
 		self.locations[44].river = True
 
 	def markCoordinates(self):
 		for i in range(0, LOCATIONS_NUM + 1):
-			self.cartesianLocations[(i // self.mapWidth, i % self.mapWidth)] = self.locations[i]
-			self.locations[i].cartesianCoordinates = (i // self.mapWidth, i % self.mapWidth)
+			self.cartesianLocations[(i // MAP_WIDTH, i % MAP_WIDTH)] = self.locations[i]
+			self.locations[i].cartesianCoordinates = (i // MAP_WIDTH, i % MAP_WIDTH)
 		for i in [21, 22, 23, 33, 34, 35, 39, 40, 41, 42, 43, 44]:
 			del(self.cartesianLocations[(i // 3, i % 3)])
 		for i in [21, 22, 23, 33, 34, 35, 39, 40, 41, 42, 43, 44]:
 			self.cartesianLocations[(i // 3, i % 3 + 1)] = self.locations[i]
-			self.locations[i].cartesianCoordinates = (i // self.mapWidth, i % self.mapWidth + 1)
+			self.locations[i].cartesianCoordinates = (i // MAP_WIDTH, i % MAP_WIDTH + 1)
 		# Cube Coordinates
 		mapCurve = ['0', 'NE', 'SE', 'NE', 'SE', 'NE', 'SE',
 		'SE', 'NE', 'NE', 'SE', 'SE', 'NE', 'SE', 'SE']
@@ -353,8 +364,8 @@ class Map:
 			# transforms to the lake) divided by 2 must be >= 1.
 			# So: (destX - 1 - currX - 1) // 2 >= 1
 			# Or: currX <= destX - 4
-			currX = loc.num // self.mapWidth
-			destX = LOCATIONS_NUM // self.mapWidth
+			currX = loc.num // MAP_WIDTH
+			destX = LOCATIONS_NUM // MAP_WIDTH
 			if not self.lake["found"]:
 				if currX <= destX - 4:
 					debug('lake not found yet')
@@ -748,16 +759,16 @@ class Expedition:
 			# '{land} снизили результат {dicesWalk}: {points}'
 			print(_("message.doWalk.landDec").format(land = self.currentLocation.land,
 				dicesWalk = dicesWalk, points = points))
-		if self.currentLocation.land in [
 		# 'Равнины', 'Озеро'
-		_("lands.plains"), _("lands.lake")
-		]:
+		if self.currentLocation.land in [_("lands.plains"), _("lands.lake")]:
 			points += 1
 			# {land} повысили результат {dicesWalk}: {points}
 			print(_("message.doWalk.landInc").format(land = self.currentLocation.land,
 				dicesWalk = dicesWalk, points = points))
+		# В принципе, набор вызываемых элементарных действий тоже может быть
+		# настраиваемым по словарю
 		if points < 4:
-			if self.expeditionType == 6 and self.food > 1:
+			if self.expeditionType == EXP_DOCTOR and self.food > MIN["food"]:
 				self.decFood()
 			else:
 				self.decCon()
@@ -777,7 +788,8 @@ class Expedition:
 			self.incMove(4)
 
 	def do03Map(self, loc, dicesMap, jockers):
-		if self.currentLocation.river and 1 in dicesMap:
+		# Phase 3 processing
+		if self.currentLocation.river and (WILD in dicesMap):
 			# Добавить водопад вниз по течению
 			self.map.foundWaterfall(self.currentLocation)
 		points = min(12, sum(dicesMap) + jockers)
@@ -792,6 +804,7 @@ class Expedition:
 			raise Exception(_("exception.doMap.locationMapped").format(loc = loc))
 
 	def do04Explore(self, dicesExplore, jockers):
+		# Phase 4 processing
 		points = sum(dicesExplore) + jockers
 		debug(f'dicesExplore: {dicesExplore}, jockers: {jockers}')
 		if self.currentLocation.land in ["lands.jungle"]:
@@ -806,7 +819,7 @@ class Expedition:
 		if points < 3:
 			# 'Потеря конкистадора ...'
 			print(_("message.doExplore.decCon"))
-			if self.expeditionType == 6 and self.food > 1:
+			if self.expeditionType == EXP_DOCTOR and self.food > MIN["food"]:
 				# '... заменена на потерю провизии!'
 				print(_("message.doExplore.decConExpType"))
 				self.decFood()
@@ -817,7 +830,7 @@ class Expedition:
 		elif points < 6:
 			self.decMove()
 		elif points < 8:
-			if self.expeditionType == 5:
+			if self.expeditionType == EXP_REL:
 				self.foundSettlement(True)
 			else:
 				self.foundSettlement(False)
@@ -835,6 +848,7 @@ class Expedition:
 			self.do07Wonder(wonder)
 
 	def do05Contact(self, dicesContact, jockers):
+		# Phase 5 processing
 		debug(f'do05Contact enter: dicesContact: {dicesContact}, jockers: {jockers}')
 		if self.currentLocation in self.map.empireLocations \
 		and len(dicesContact) > 1:
@@ -855,7 +869,7 @@ class Expedition:
 			elif points == 5:
 				self.feverSet()
 			elif points < 9:
-				if self.expeditionType == 5:
+				if self.expeditionType == EXP_REL:
 					self.foundSettlement(True)
 				else:
 					self.foundSettlement(False)
@@ -869,6 +883,7 @@ class Expedition:
 				self.foundSettlement(True)
 
 	def do06Hunting(self, dicesHunting, jockers):
+		# Phase 6 processing
 		debug(f'dicesHunting: {dicesHunting}, jockers: {jockers}')
 		points = sum(dicesHunting) + jockers
 		# 'Горы', 'Лес'
@@ -881,13 +896,14 @@ class Expedition:
 			points += self.currentLocation.friendlySettlements
 			# 'Дружественные поселения повысили результат: {points}'
 			print(_("message.doHunting.friendlyInc").format(points = points))
-		if self.expeditionType == 2:
+		if self.expeditionType == EXP_BOT:
 			points += 1
 			# 'Тип экспедиции "{expType}" повысил результат: {points}'
-			print(_("message.doHunting.incExpType").format(expType = common.EXPEDITIONTYPES[self.expeditionType][0],
+			print(_("message.doHunting.incExpType").format(expType = 
+				common.EXPEDITIONTYPES[self.expeditionType][0],
 				points = points))
 		if points < 4:
-			if self.expeditionType == 6 and self.food > 1:
+			if self.expeditionType == EXP_DOCTOR and self.food > MIN["food"]:
 				self.decFood()
 			else:
 				self.decCon()
@@ -905,10 +921,11 @@ class Expedition:
 			self.incMorale()
 
 	def do07Wonder(self, wonder):
+		# Phase 7 processing
 		debug('do07Wonder enter')
 		if wonder == self.map.camp:
 			debug('camp')
-			self.incAmmo(5)
+			self.incAmmo(MAX["ammo"] - 1)
 			self.foundTrail()
 		elif wonder == self.map.herd:
 			debug('herd')
@@ -916,7 +933,7 @@ class Expedition:
 			debug('call manyFood()')
 		elif wonder == self.map.wonder:
 			debug('wonder')
-			self.incMorale(5)
+			self.incMorale(MAX["morale"] - 1)
 		elif wonder == self.map.eclipse:
 			debug('eclipse')
 			self.eclipseSet()
@@ -932,9 +949,11 @@ class Expedition:
 		elif wonder == self.map.lake:
 			debug('lake')
 			# Find a location (on the river) between current and final locations
-			shift = (14 - self.currentLocation.num // 3) // 2
+			shift = ((LOCATIONS_NUM // MAP_WIDTH) - 
+				self.currentLocation.num // MAP_WIDTH) // 2
 			debug(f'shift: {shift}')
-			l0 = self.map.locations[3 * (self.currentLocation.num // 3 + shift) + 1]
+			l0 = self.map.locations[MAP_WIDTH * (self.currentLocation.num // 
+				MAP_WIDTH + shift) + 1]
 			debug(f'l0: {l0.cubeCoordinates}')
 			# Dice(1) to define two neighbor locations (amongst 6 possible options)
 			c1 = common.DIRS[list(common.DIRS.keys())[1:][int(dice.roll(1)[0])-1]][0]
@@ -950,13 +969,14 @@ class Expedition:
 			# 'Обнаружено Озеро Лагос де Оро! Оно занимает следующие участки:'
 			print(_("message.doWonder.lake"))
 			for l in self.map.lakeLocations:
-				l.land = common.LANDS[11]
+				l.land = _("lands.lake")
 				print(f'{l}')
 		else:
 			# 'Неизвестная достопримечательность: {wonder}'
 			raise Exception(_("exception.doWonder.unknownWonder").format(wonder = wonder))
 
 	def do08Food(self):
+		# Phase 8 processing
 		# 'ПРИЁМ ПИЩИ'
 		print("\n" + _("header.doFood"))
 		if self.currentLocation in self.map.herdLocations:
@@ -970,23 +990,25 @@ class Expedition:
 			m = getMenuChoice(menuItems, menuHeader, inputPrompt)
 			if m == 'Y':
 				self.decAmmo()
-				self.incFood(5)
+				self.incFood(MAX["food"] - 1)
 		else:
 			self.decFood()
 
 	def getMP(self, toLoc):
-		movePoints = 5
+		movePoints = MP_NORMAL
 		if self.currentLocation.river and toLoc.river \
 		and self.currentLocation.num < toLoc.num:
-			movePoints = 4
+			# May be replaced by locations comparison
+			movePoints = MP_RIVER
 		if (self.currentLocation, toLoc) in self.map.trails:
-			movePoints = 3
+			movePoints = MP_TRAIL
 		if self.currentLocation == toLoc:
-			movePoints = 0
+			movePoints = MP_STAY
 		return(movePoints)
 
 	def availableLocations(self):
-		''' Вернуть список доступных для продвижения участков и требуемое количество пунктов движения
+		''' Return list of available for move locations
+		and move points required
 		'''
 		nm = self.map.neighborsMapped(self.currentLocation)
 		# debug(nm)
@@ -1006,6 +1028,7 @@ class Expedition:
 		return(res)
 
 	def do09move(self):
+		# Phase 9 processing
 		# 'ПРОДВИЖЕНИЕ ПО КАРТЕ'
 		print("\n" + _("header.doMove"))
 		debug(f'movePoints: {self.move}')
@@ -1017,7 +1040,8 @@ class Expedition:
 		inputPrompt = _("menuPrompt.doMove")
 		for k in avLocs.keys():
 			debug(f'avLocs[k]: {avLocs[k]}')
-			menuItems[k] = [f'{common.DIRS_EXTENSION[k][3].rjust(2)} {self.barMove(avLocs[k][1])} {common.DIRS_EXTENSION[k][2]} ({avLocs[k][0]})',
+			menuItems[k] = [f'{common.DIRS_EXTENSION[k][3].rjust(2)} \
+{self.barMove(avLocs[k][1])} {common.DIRS_EXTENSION[k][2]} ({avLocs[k][0]})',
 			(avLocs[k][1] < self.move)]
 			debug(k)
 			debug(menuItems[k][0])
@@ -1027,7 +1051,7 @@ class Expedition:
 			debug(m)
 			nextLocation = avLocs[m][0]
 			reqMP = avLocs[m][1]
-			if self.expeditionType == 4:
+			if self.expeditionType == EXP_ARCH:
 				if (((self.currentLocation, nextLocation) in self.map.trails)
 								and self.currentLocation.land != nextLocation.land):
 					# Обнаружить достопримечательность
@@ -1038,16 +1062,17 @@ class Expedition:
 			self.decMove(reqMP)
 			movemorale = int(common.DIRS_EXTENSION[m][1])
 			self.incMorale(movemorale)
-			if self.currentLocation.num == 18:
+			if self.currentLocation.num == LOC_WONDER:
 				self.map.foundWonder(self.currentLocation)	
 
 	def proposeReRoll(self, d1, forAmmo = False):
+		# Propose re-role dice if there is a musket
 		debug(f'd1: {d1}')
 		rdValid = []
 		ok = False
 		while not ok:
 			if forAmmo:
-				if self.ammo <= 1:
+				if self.ammo <= MIN["ammo"]:
 					# 'Недостаточно снаряжения для переброски кубиков'
 					raise Exception(_("exception.proposeReRoll.noAmmo"))
 				else:
@@ -1079,41 +1104,31 @@ class Expedition:
 		else:
 			res = d1
 		return(res)
-	'''
-	def proposeJockerUse(self):
-		jockers = 0
-		if self.dicesPlan.count(1) > 1:
-			while True:
-				jockers = input('Сколько джокеров использовать: ')
-				if jockers.isdigit() and int(jockers) <= self.dicesPlan.count(1):
-					return jockers
-		else:
-			return(0)
-	'''
 
 	def dice01Plan(self):
+		# Phase 1
 		if self.fever:
 			# 'ПЛАНИРОВАНИЕ (Лихорадочное)'
 			print("\n" + _("header.dicePlanFever"))
 		else:
 			# 'ПЛАНИРОВАНИЕ'
 			print("\n" + _("header.dicePlan"))
-		p = dice.roll(5)
+		p = dice.roll(DICE_COUNT_PLAN)
 		if self.map.diego["found"]:
-			p += [1]
+			p += [WILD]
 			# 'Диего добавил джокер'
 			print(_("message.dicePlan.diego"))
 		self.dicesPlan = self.proposeReRoll(p)
 		debug(f'dicesPlan: {self.dicesPlan}')
 		if self.fever and self.currentLocation.land != _("lands.swamp"):
-			if self.dicesPlan.count(1) >= self.FEVERREQ:
+			if self.dicesPlan.count(WILD) >= self.FEVERREQ:
 				self.feverUnset()
 				for i in range(0, self.FEVERREQ):
-					self.dicesPlan.remove(1)
+					self.dicesPlan.remove(WILD)
 			else:
 				j = 0
-				while 1 in self.dicesPlan:
-					self.dicesPlan.remove(1)
+				while WILD in self.dicesPlan:
+					self.dicesPlan.remove(WILD)
 					j += 1
 				if j > 0:
 					# 'Во время лихорадки нельзя использовать джокеры'
@@ -1121,7 +1136,7 @@ class Expedition:
 		# 'Кубики планирования: {dices}'
 		print(_("message.dicePlan").format(dices = self.dicesPlan))
 		# Распределить джокеры
-		j = self.dicesPlan.count(1)
+		j = self.dicesPlan.count(WILD)
 		if j >= 1:
 			# 'Распределите имеющиеся джокеры по этапам (2-6). Например, 223.'
 			print(_("menuHeader.dicePlan.useJockers"))
@@ -1132,12 +1147,12 @@ class Expedition:
 					jl = list(map(int, list(s)))
 					if min(jl) >= 2 and max(jl) <= 6:
 						break
-			while 1 in self.dicesPlan:
-				self.dicesPlan.remove(1)
+			while WILD in self.dicesPlan:
+				self.dicesPlan.remove(WILD)
 			self.dicesPlan += jl
-		if self.con < 6:
+		if self.con < MAX["con"]:
 			for i in range(2, 7):
-				if self.dicesPlan.count(i) >= 4:
+				if self.dicesPlan.count(i) >= DICE_COUNT_INC_CON:
 					self.incCon()
 		if self.dicesPlan.count(2) >= 1:
 			self.dice02Walk()
@@ -1155,10 +1170,11 @@ class Expedition:
 			self.dice06Hunting()
 
 	def dice02Walk(self):
+		# Phase 2
 		d = dice.roll()
 		# 'ХОДЬБА'
 		print("\n" + _("header.diceWalk"))
-		if self.ammo > 1:
+		if self.ammo > MIN["ammo"]:
 			self.dicesWalk = self.proposeReRoll(d, True)
 		else:
 			self.dicesWalk = d
@@ -1167,6 +1183,7 @@ class Expedition:
 		self.do02Walk(self.dicesWalk, self.dicesPlan.count(2) - 1)
 
 	def dice03Map(self):
+		# Phase 3
 		# 'СОСТАВЛЕНИЕ КАРТЫ'
 		print("\n" + _("header.diceMap"))
 		menuItems = {}
@@ -1207,10 +1224,11 @@ class Expedition:
 			print(_("message.diceMap.noLocations"))
 
 	def dice04Explore(self):
+		# Phase 4
 		# 'ИССЛЕДОВАНИЕ'
 		print("\n" + _("header.diceExplore"))
 		d = dice.roll()
-		if self.ammo > 1:
+		if self.ammo > MIN["ammo"]:
 			self.dicesExplore = self.proposeReRoll(d, True)
 		else:
 			self.dicesExplore = d
@@ -1219,6 +1237,7 @@ class Expedition:
 		self.do04Explore(self.dicesExplore, self.dicesPlan.count(4) - 1)
 
 	def dice05Contact(self):
+		# Phase 5
 		# 'КОНТАКТ С ТУЗЕМЦАМИ'
 		print("\n" + _("header.diceContact"))
 		if self.eclipse_count > 0:
@@ -1230,7 +1249,9 @@ class Expedition:
 			for k in common.CONTACT_RESULTS.keys():
 				menuItems[k] = common.CONTACT_RESULTS[k]
 			m = getMenuChoice(menuItems, menuHeader, inputPrompt)
+			# Formula ...
 			self.dicesContact = [int(m), int(m) + 1]
+			# ... with exception
 			if m == 5:
 				self.dicesContact = [5, 5]
 			self.do05Contact(self.dicesContact)
@@ -1243,23 +1264,25 @@ class Expedition:
 			if self.map.princess["found"]:
 				while 1 in d or 2 in d:
 					d = dice.roll(len(d))
-			if self.ammo > 1:
+			if self.ammo > MIN["ammo"]:
 				self.dicesContact = self.proposeReRoll(d, True)
 			else:
 				self.dicesContact = d
 		self.do05Contact(self.dicesContact, self.dicesPlan.count(5) - 1)
 
 	def dice06Hunting(self):
+		# Phase 6
 		# 'ОХОТА'
 		print("\n" + _("header.diceHunting"))
 		d = dice.roll()
-		if self.ammo > 1:
+		if self.ammo > MIN["ammo"]:
 			self.dicesHunting = self.proposeReRoll(d, True)
 		else:
 			self.dicesHunting = d
 		self.do06Hunting(self.dicesHunting, self.dicesPlan.count(6) - 1)
 
 	def playDay(self):
+		# Play all phases
 		while True:
 			tw = self.map.trailWith(self.currentLocation)
 			print()
@@ -1284,7 +1307,8 @@ class Expedition:
 					break
 
 			self.day += 1
-			if self.expeditionType == 1 and self.move >= 3 \
+			# Cartography expedition found a trail if has > 2 MP 
+			if self.expeditionType == EXP_CART and self.move >= EXP_CART_MP \
 			and not self.currentLocation.trail:
 				self.foundTrail()
 			if self.day > LAST_DAY or self.currentLocation.num == DESTINATION:
