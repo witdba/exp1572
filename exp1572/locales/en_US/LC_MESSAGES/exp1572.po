@@ -203,11 +203,11 @@ msgid "message.incFoodMax"
 msgstr "The maximum for food stocks is reached"
 
 #: exp1572.py:531
-msgid "message.decmorale"
+msgid "message.decMorale"
 msgstr "The morale is decreased: {morale}"
 
 #: exp1572.py:533
-msgid "message.decmoraleMin"
+msgid "message.decMoraleMin"
 msgstr "Desertion"
 
 #: exp1572.py:539

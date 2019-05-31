@@ -203,11 +203,11 @@ msgid "message.incFoodMax"
 msgstr "Достигнут максимум запасов пищи"
 
 #: exp1572.py:531
-msgid "message.decmorale"
+msgid "message.decMorale"
 msgstr "Боевой дух упал: {morale}"
 
 #: exp1572.py:533
-msgid "message.decmoraleMin"
+msgid "message.decMoraleMin"
 msgstr "Дезертирство"
 
 #: exp1572.py:539
