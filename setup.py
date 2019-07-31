@@ -29,11 +29,11 @@ def create_mo_files():
 	mo_files = []
 	prefix = name
 
-	for po_path in glob.glob(str(pathlib.Path(prefix) / PO_FILES)):
+	for po_path in glob.glob(str(pathlib.Path() / PO_FILES)):
 		mo = pathlib.Path(po_path.replace('.po', '.mo'))
 
 		subprocess.run(['msgfmt', '-o', str(mo), po_path], check=True)
-		mo_files.append(str(mo.relative_to(prefix)))
+		mo_files.append(str(mo))
 
 	return mo_files
 
