@@ -14,10 +14,22 @@ This is a one page (print-and-play, PnP), ultra-portable, black and white solita
 pip install exp1572
 ```
 
+OR build with Docker
+
+```bash
+docker build -t exp1572 .
+```
+
 ## Run
 
 ```bash
 exp1572
+```
+
+OR run with Docker
+
+```bash
+docker run -it exp1572
 ```
 
 Available localizations: ru, en (work continues)
