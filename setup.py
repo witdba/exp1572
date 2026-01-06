@@ -69,7 +69,7 @@ setup(
 	],
 	keywords = 'python console game manager',  # Optional
 	packages=find_packages(),  # Required
-	python_requires='>=3.0.*',
+	python_requires='>=3.0',
 	install_requires=['babel'],  # Optional
 	include_package_data = True,
 	package_data={  # Optional
